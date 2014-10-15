@@ -1,0 +1,4 @@
+EmbeDI
+======
+
+Embedded DI container
