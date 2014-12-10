@@ -120,12 +120,12 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function serialize()
 	{
-		serialize(self::$values[$this->ownerId][$this->instanceId][$offset]);
+		return serialize(self::$values[$this->ownerId][$this->instanceId]);
 	}
 
 	public function unserialize($serialized)
 	{
-		self::$values[$this->ownerId][$this->instanceId][$offset] = unserialize($serialized);
+		return self::$values[$this->ownerId][$this->instanceId] = unserialize($serialized);
 	}
 
 	public function valid()
