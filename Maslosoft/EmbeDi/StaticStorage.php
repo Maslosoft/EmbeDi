@@ -45,7 +45,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 		assert(is_object($owner));
 		$this->ownerId = get_class($owner);
 		$this->instanceId = $instanceId;
-		self::$values[$this->ownerId] = [];
+		self::$values[$this->ownerId][$instanceId] = [];
 	}
 
 	public function removeAll()
@@ -69,6 +69,16 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	public function __set($name, $value)
 	{
 		self::$values[$this->ownerId][$this->instanceId][$name] = $value;
+	}
+
+	public function __unset($name)
+	{
+		unset(self::$values[$this->ownerId][$this->instanceId][$name]);
+	}
+
+	public function __isset($name)
+	{
+		return array_key_exists($name, self::$values[$this->ownerId][$this->instanceId]);
 	}
 
 // <editor-fold defaultstate="collapsed" desc="Interfaces implementation">
@@ -115,7 +125,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function rewind()
 	{
-		rewind(self::$values[$this->ownerId][$this->instanceId][$offset]);
+		reset(self::$values[$this->ownerId][$this->instanceId]);
 	}
 
 	public function serialize()
