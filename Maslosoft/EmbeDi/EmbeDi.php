@@ -8,6 +8,9 @@
 
 namespace Maslosoft\EmbeDi;
 
+use ReflectionObject;
+use ReflectionProperty;
+
 /**
  * EmbeDi
  *
@@ -23,6 +26,13 @@ class EmbeDi
 	public function __construct($object, $instanceId = EmbeDi::DefaultInstanceId, $fields = [])
 	{
 		$this->_storage = new StaticStorage($object, $instanceId);
+		if(!$fields)
+		{
+			foreach((new ReflectionObject($object))->getProperties(ReflectionProperty::IS_PUBLIC & ReflectionProperty::IS_STATIC) as $property)
+			{
+				$fields[] = $property->name;
+			}
+		}
 	}
 
 	public function configure($object)

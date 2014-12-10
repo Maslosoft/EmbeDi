@@ -38,7 +38,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	 * Stored values
 	 * @var mixed[][]
 	 */
-	private static $values;
+	private static $values = [];
 
 	public function __construct($owner, $instanceId)
 	{
@@ -51,6 +51,24 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	public function removeAll()
 	{
 		self::$values[$this->ownerId][$this->instanceId] = [];
+	}
+
+	/**
+	 * Destroy all data in all containers
+	 */
+	public function destroy()
+	{
+		self::$values = [];
+	}
+
+	public function __get($name)
+	{
+		return self::$values[$this->ownerId][$this->instanceId][$name];
+	}
+
+	public function __set($name, $value)
+	{
+		self::$values[$this->ownerId][$this->instanceId][$name] = $value;
 	}
 
 // <editor-fold defaultstate="collapsed" desc="Interfaces implementation">
@@ -87,12 +105,12 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function offsetSet($offset, $value)
 	{
-		self::$values[$this->ownerId][$this->instanceId][$offset][$offset] = $value;
+		self::$values[$this->ownerId][$this->instanceId][$offset] = $value;
 	}
 
 	public function offsetUnset($offset)
 	{
-		unset(self::$values[$this->ownerId][$this->instanceId][$offset][$offset]);
+		unset(self::$values[$this->ownerId][$this->instanceId][$offset]);
 	}
 
 	public function rewind()
@@ -102,12 +120,12 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function serialize()
 	{
-		serialize(self::$values[$this->ownerId][$this->instanceId][$offset][$offset]);
+		serialize(self::$values[$this->ownerId][$this->instanceId][$offset]);
 	}
 
 	public function unserialize($serialized)
 	{
-		self::$values[$this->ownerId][$this->instanceId][$offset][$offset] = unserialize($serialized);
+		self::$values[$this->ownerId][$this->instanceId][$offset] = unserialize($serialized);
 	}
 
 	public function valid()

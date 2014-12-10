@@ -1,4 +1,5 @@
 #Maslosoft EmbeDi
+[![Build Status](https://travis-ci.org/Maslosoft/EmbeDi.svg)](https://travis-ci.org/Maslosoft/EmbeDi)
 ######Embedded Dependecy Injection container (experimental)
 
 ## Instalation
