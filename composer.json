@@ -1,0 +1,23 @@
+{
+	"name": "maslosoft/embedi",
+	"license": "New BSD",
+	"authors": [
+		{
+			"name": "Peter Maselkowski",
+			"email": "pmaselkowski@gmail.com",
+			"homepage": "http://maslosoft.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/Maslosoft/EmbeDi/issues"
+	},
+	"require-dev": {
+		"maslosoft/embeditest": "dev-master"
+	},
+	"autoload": {
+		"psr-0": {
+			"Maslosoft\\EmbeDi": "./"
+		}
+	}
+}

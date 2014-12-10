@@ -1,0 +1,12 @@
+actor: Tester
+paths:
+    tests: vendor/maslosoft/embeditest/tests
+    log: tests/_output
+    data: vendor/maslosoft/embeditest/tests/_data
+    helpers: vendor/maslosoft/embeditest/tests/_support
+settings:
+    bootstrap: _bootstrap.php
+    colors: false
+    memory_limit: 1024M
+modules:
+   enabled: []
