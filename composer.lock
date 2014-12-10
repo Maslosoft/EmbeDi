@@ -347,12 +347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maslosoft/EmbeDiTest.git",
-                "reference": "472f15c83b2270a867a5b930fc6fe2dc7f87793a"
+                "reference": "9d8a44696b67e7b3387ad555f56688c2bb197315"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maslosoft/EmbeDiTest/zipball/472f15c83b2270a867a5b930fc6fe2dc7f87793a",
-                "reference": "472f15c83b2270a867a5b930fc6fe2dc7f87793a",
+                "url": "https://api.github.com/repos/Maslosoft/EmbeDiTest/zipball/9d8a44696b67e7b3387ad555f56688c2bb197315",
+                "reference": "9d8a44696b67e7b3387ad555f56688c2bb197315",
                 "shasum": ""
             },
             "require": {
@@ -361,7 +361,7 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "EmbeDiTest\\": "./tests/"
+                    "EmbeDiTest\\Models\\": "./"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -376,7 +376,7 @@
                     "role": "Developer"
                 }
             ],
-            "time": "2014-12-10 09:56:54"
+            "time": "2014-12-10 12:05:18"
         },
         {
             "name": "phpunit/php-code-coverage",

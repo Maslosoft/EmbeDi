@@ -40,19 +40,19 @@ class EmbeDi
 	 */
 	public function isStored()
 	{
-		return $this->_storage->stored;
+		return isset($this->_storage->stored);
 	}
 
 	public function configure($object)
 	{
 		$this->_storage = new StaticStorage($object, $this->_instanceId);
 
-		// Do not modify stored instance
-		if ($this->_storage->stored)
+		// Only configure if stored
+		if ($this->isStored())
 		{
 			foreach($this->_storage->data as $name => $value)
 			{
-				if(array_key_exists('__class__', $value))
+				if(is_array($value) && array_key_exists('__class__', $value))
 				{
 					$object->$name = new $value['__class__'];
 					unset($value['__class__']);
@@ -71,22 +71,22 @@ class EmbeDi
 		$this->_storage = new StaticStorage($object, $this->_instanceId);
 
 		// Do not modify stored instance
-		if ($this->_storage->stored)
+		if ($this->isStored())
 		{
 			return $this->_storage;
 		}
 
 		$data = [];
-		foreach ($this->_getFields($object, $fields) as $name => $value)
+		foreach ($this->_getFields($object, $fields) as $name)
 		{
 			// If object, recurse
-			if (is_object($value))
+			if (is_object($object->$name))
 			{
-				$data[$name] = $this->store($value);
+				$data[$name] = $this->store($object->$name);
 			}
 			else
 			{
-				$data[$name] = $value;
+				$data[$name] = $object->$name;
 			}
 		}
 		$this->_storage->stored = true;
@@ -99,9 +99,13 @@ class EmbeDi
 	{
 		if (!$fields)
 		{
-			foreach ((new ReflectionObject($object))->getProperties(ReflectionProperty::IS_PUBLIC & ReflectionProperty::IS_STATIC) as $property)
+			foreach ((new ReflectionObject($object))->getProperties(ReflectionProperty::IS_PUBLIC) as $property)
 			{
-				$fields[] = $property->name;
+				// http://stackoverflow.com/a/15784768/133408
+				if(!$property->isStatic())
+				{
+					$fields[] = $property->name;
+				}
 			}
 		}
 		return $fields;

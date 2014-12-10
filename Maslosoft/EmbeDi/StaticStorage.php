@@ -38,14 +38,27 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	 * Stored values
 	 * @var mixed[][]
 	 */
-	private static $values = [];
+	public static $values = [];
 
 	public function __construct($owner, $instanceId)
 	{
 		assert(is_object($owner));
 		$this->ownerId = get_class($owner);
 		$this->instanceId = $instanceId;
-		self::$values[$this->ownerId][$instanceId] = [];
+		// Gracefully init - this is required for subsequent constructor calls
+		if(!array_key_exists($this->ownerId, self::$values))
+		{
+			self::$values[$this->ownerId] = [];
+		}
+		if(!array_key_exists($instanceId, self::$values[$this->ownerId]))
+		{
+			self::$values[$this->ownerId][$instanceId] = [];
+		}
+	}
+
+	public function getAll()
+	{
+		return self::$values[$this->ownerId][$this->instanceId];
 	}
 
 	public function removeAll()
