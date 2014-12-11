@@ -23,16 +23,22 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 {
 
 	/**
-	 * Instance id
+	 * Namespace, current container class name
 	 * @var string
 	 */
-	private $instanceId = '';
+	private $ns = '';
 
 	/**
 	 * Owner Id
 	 * @var string
 	 */
 	private $ownerId = '';
+
+	/**
+	 * Instance id
+	 * @var string
+	 */
+	private $instanceId = '';
 
 	/**
 	 * Stored values
@@ -43,27 +49,32 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	public function __construct($owner, $instanceId)
 	{
 		assert(is_object($owner));
+		$this->ns = get_class($this);
 		$this->ownerId = get_class($owner);
 		$this->instanceId = $instanceId;
 		// Gracefully init - this is required for subsequent constructor calls
-		if(!array_key_exists($this->ownerId, self::$values))
+		if(!array_key_exists($this->ns, self::$values))
 		{
-			self::$values[$this->ownerId] = [];
+			self::$values[$this->ns] = [];
 		}
-		if(!array_key_exists($instanceId, self::$values[$this->ownerId]))
+		if(!array_key_exists($this->ownerId, self::$values[$this->ns]))
 		{
-			self::$values[$this->ownerId][$instanceId] = [];
+			self::$values[$this->ns][$this->ownerId] = [];
+		}
+		if(!array_key_exists($instanceId, self::$values[$this->ns][$this->ownerId]))
+		{
+			self::$values[$this->ns][$this->ownerId][$instanceId] = [];
 		}
 	}
 
 	public function getAll()
 	{
-		return self::$values[$this->ownerId][$this->instanceId];
+		return self::$values[$this->ns][$this->ownerId][$this->instanceId];
 	}
 
 	public function removeAll()
 	{
-		self::$values[$this->ownerId][$this->instanceId] = [];
+		self::$values[$this->ns][$this->ownerId][$this->instanceId] = [];
 	}
 
 	/**
@@ -76,79 +87,79 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function __get($name)
 	{
-		return self::$values[$this->ownerId][$this->instanceId][$name];
+		return self::$values[$this->ns][$this->ownerId][$this->instanceId][$name];
 	}
 
 	public function __set($name, $value)
 	{
-		self::$values[$this->ownerId][$this->instanceId][$name] = $value;
+		self::$values[$this->ns][$this->ownerId][$this->instanceId][$name] = $value;
 	}
 
 	public function __unset($name)
 	{
-		unset(self::$values[$this->ownerId][$this->instanceId][$name]);
+		unset(self::$values[$this->ns][$this->ownerId][$this->instanceId][$name]);
 	}
 
 	public function __isset($name)
 	{
-		return array_key_exists($name, self::$values[$this->ownerId][$this->instanceId]);
+		return array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 // <editor-fold defaultstate="collapsed" desc="Interfaces implementation">
 
 	public function count($mode = 'COUNT_NORMAL')
 	{
-		return count(self::$values[$this->ownerId][$this->instanceId]);
+		return count(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function current()
 	{
-		return current(self::$values[$this->ownerId][$this->instanceId]);
+		return current(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function key()
 	{
-		return key(self::$values[$this->ownerId][$this->instanceId]);
+		return key(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function next()
 	{
-		return next(self::$values[$this->ownerId][$this->instanceId]);
+		return next(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function offsetExists($offset)
 	{
-		return array_key_exists($offset, self::$values[$this->ownerId][$this->instanceId]);
+		return array_key_exists($offset, self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function offsetGet($offset)
 	{
-		return self::$values[$this->ownerId][$this->instanceId][$offset];
+		return self::$values[$this->ns][$this->ownerId][$this->instanceId][$offset];
 	}
 
 	public function offsetSet($offset, $value)
 	{
-		self::$values[$this->ownerId][$this->instanceId][$offset] = $value;
+		self::$values[$this->ns][$this->ownerId][$this->instanceId][$offset] = $value;
 	}
 
 	public function offsetUnset($offset)
 	{
-		unset(self::$values[$this->ownerId][$this->instanceId][$offset]);
+		unset(self::$values[$this->ns][$this->ownerId][$this->instanceId][$offset]);
 	}
 
 	public function rewind()
 	{
-		reset(self::$values[$this->ownerId][$this->instanceId]);
+		reset(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function serialize()
 	{
-		return serialize(self::$values[$this->ownerId][$this->instanceId]);
+		return serialize(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
 	public function unserialize($serialized)
 	{
-		return self::$values[$this->ownerId][$this->instanceId] = unserialize($serialized);
+		return self::$values[$this->ns][$this->ownerId][$this->instanceId] = unserialize($serialized);
 	}
 
 	public function valid()
