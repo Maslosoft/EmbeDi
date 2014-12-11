@@ -11,6 +11,8 @@ namespace Maslosoft\EmbeDi;
 use ArrayAccess;
 use Countable;
 use Iterator;
+use ReflectionObject;
+use ReflectionProperty;
 use Serializable;
 
 /**
@@ -48,20 +50,21 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function __construct($owner, $instanceId)
 	{
+		$this->_propertize();
 		assert(is_object($owner));
 		$this->ns = get_class($this);
 		$this->ownerId = get_class($owner);
 		$this->instanceId = $instanceId;
 		// Gracefully init - this is required for subsequent constructor calls
-		if(!array_key_exists($this->ns, self::$values))
+		if (!array_key_exists($this->ns, self::$values))
 		{
 			self::$values[$this->ns] = [];
 		}
-		if(!array_key_exists($this->ownerId, self::$values[$this->ns]))
+		if (!array_key_exists($this->ownerId, self::$values[$this->ns]))
 		{
 			self::$values[$this->ns][$this->ownerId] = [];
 		}
-		if(!array_key_exists($instanceId, self::$values[$this->ns][$this->ownerId]))
+		if (!array_key_exists($instanceId, self::$values[$this->ns][$this->ownerId]))
 		{
 			self::$values[$this->ns][$this->ownerId][$instanceId] = [];
 		}
@@ -168,4 +171,21 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	}
 
 // </editor-fold>
+
+	/**
+	 * This unsets class fields and turns them into storage-aware properties
+	 * @return void
+	 */
+	private function _propertize()
+	{
+		foreach ((new ReflectionObject($this))->getProperties(ReflectionProperty::IS_PUBLIC) as $property)
+		{
+			// http://stackoverflow.com/a/15784768/133408
+			if (!$property->isStatic())
+			{
+				unset($this->{$property->name});
+			}
+		}
+	}
+
 }
