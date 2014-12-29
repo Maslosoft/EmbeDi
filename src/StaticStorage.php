@@ -183,6 +183,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 			// http://stackoverflow.com/a/15784768/133408
 			if (!$property->isStatic())
 			{
+				$this->__set($property->name, $this->{$property->name});
 				unset($this->{$property->name});
 			}
 		}
