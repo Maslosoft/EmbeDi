@@ -50,7 +50,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function __construct($owner, $instanceId)
 	{
-		$this->_propertize();
+		
 		assert(is_object($owner));
 		$this->ns = get_class($this);
 		$this->ownerId = get_class($owner);
@@ -68,6 +68,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 		{
 			self::$values[$this->ns][$this->ownerId][$instanceId] = [];
 		}
+		$this->_propertize();
 	}
 
 	public function getAll()
@@ -105,7 +106,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 
 	public function __isset($name)
 	{
-		return array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->instanceId]);
+		return isset(self::$values[$this->ns][$this->ownerId][$this->instanceId][$name]);
 	}
 
 // <editor-fold defaultstate="collapsed" desc="Interfaces implementation">
@@ -183,8 +184,12 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 			// http://stackoverflow.com/a/15784768/133408
 			if (!$property->isStatic())
 			{
-				$this->__set($property->name, $this->{$property->name});
-				unset($this->{$property->name});
+				$name = $property->name;
+				if(!array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->instanceId]))
+				{
+					$this->__set($name, $this->$name);
+				}
+				unset($this->$name);
 			}
 		}
 	}

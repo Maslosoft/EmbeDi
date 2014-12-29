@@ -56,7 +56,7 @@ class EmbeDi
 	 */
 	public function isStored()
 	{
-		return isset($this->_storage->stored);
+		return $this->_storage->stored;
 	}
 
 	public function configure($object)
