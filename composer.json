@@ -16,8 +16,8 @@
 		"maslosoft/embeditest": "dev-master"
 	},
 	"autoload": {
-		"psr-0": {
-			"Maslosoft\\EmbeDi": "./"
+		"psr-4": {
+			"Maslosoft\\EmbeDi\\": "src/"
 		}
 	}
 }
