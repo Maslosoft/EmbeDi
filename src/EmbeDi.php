@@ -39,7 +39,7 @@ class EmbeDi
 	 * Storage container
 	 * @var DiStore
 	 */
-	private $_storage = null;
+	private $storage = null;
 
 	/**
 	 * Create container with provided id
@@ -54,21 +54,21 @@ class EmbeDi
 	 * Whenever current configuration is stored
 	 * @return bool
 	 */
-	public function isStored()
+	public function isStored($object)
 	{
-		return $this->_storage->stored;
+		return (new DiStore($object, $this->_instanceId))->stored;
 	}
 
 	public function configure($object)
 	{
-		$this->_storage = new DiStore($object, $this->_instanceId);
+		$storage = new DiStore($object, $this->_instanceId);
 
 		// Only configure if stored
-		if ($this->isStored())
+		if ($this->isStored($object))
 		{
-			foreach ($this->_storage->data as $name => $value)
+			foreach ($storage->data as $name => $value)
 			{
-				$class = $this->_storage->classes[$name];
+				$class = $storage->classes[$name];
 				if ($class)
 				{
 					$object->$name = new $class;
@@ -94,12 +94,12 @@ class EmbeDi
 
 	public function store($object, $fields = [])
 	{
-		$this->_storage = new DiStore($object, $this->_instanceId);
+		$storage = new DiStore($object, $this->_instanceId);
 
 		// Do not modify stored instance
-		if ($this->isStored())
+		if ($this->isStored($object))
 		{
-			return $this->_storage;
+			return $storage;
 		}
 
 		$data = [];
@@ -110,7 +110,7 @@ class EmbeDi
 			if (is_object($object->$name))
 			{
 				$data[$name] = $this->store($object->$name);
-				$classes[$name] = get_class($object);
+				$classes[$name] = get_class($object->$name);
 			}
 			else
 			{
@@ -118,10 +118,10 @@ class EmbeDi
 				$classes[$name] = '';
 			}
 		}
-		$this->_storage->stored = true;
-		$this->_storage->data = $data;
-		$this->_storage->classes = $classes;
-		$this->_storage->class = get_class($object);
+		$storage->stored = true;
+		$storage->data = $data;
+		$storage->classes = $classes;
+		$storage->class = get_class($object);
 		return $data;
 	}
 
