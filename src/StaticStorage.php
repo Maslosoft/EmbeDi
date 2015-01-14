@@ -15,6 +15,7 @@ namespace Maslosoft\EmbeDi;
 use ArrayAccess;
 use Countable;
 use Iterator;
+use Maslosoft\EmbeDi\Interfaces\IMassAssigned;
 use ReflectionObject;
 use ReflectionProperty;
 use Serializable;
@@ -25,7 +26,7 @@ use Serializable;
  *
  * @author Piotr Maselkowski <pmaselkowski at gmail.com>
  */
-class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
+class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, IMassAssigned
 {
 
 	/**
@@ -78,6 +79,11 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess
 	public function getAll()
 	{
 		return self::$values[$this->ns][$this->ownerId][$this->instanceId];
+	}
+
+	public function setAll($values)
+	{
+		return self::$values[$this->ns][$this->ownerId][$this->instanceId] = $values;
 	}
 
 	public function removeAll()
