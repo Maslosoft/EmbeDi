@@ -82,17 +82,25 @@ class EmbeDi
 		}
 	}
 
-	public function apply($object, $configuration)
+	/**
+	 * Apply configuration to object from array
+	 * @param mixed[][] $configuration
+	 * @param object $object
+	 * @return object
+	 */
+	public function apply($configuration, $object = null)
 	{
-		// TODO Apply configuration to object from array
-		foreach($configuration as $name => $value)
+		if (null === $object && array_key_exists($this->classField, $configuration))
 		{
-			if(is_array($value) && array_key_exists($this->classField, $value))
+			$className = $configuration[$this->classField];
+			unset($configuration[$this->classField]);
+			$object = new $className;
+		}
+		foreach ($configuration as $name => $value)
+		{
+			if (is_array($value) && array_key_exists($this->classField, $value))
 			{
-				$className = $value[$this->classField];
-				unset($value[$this->classField]);
-				$subObject = new $className;
-				$object->$name = $this->apply($subObject, $value);
+				$object->$name = $this->apply($value);
 			}
 			else
 			{
@@ -103,27 +111,26 @@ class EmbeDi
 	}
 
 	/**
-	 * Export configuration
+	 * Export object configuration to array
 	 * @param object $object
 	 * @param string[] $fields
 	 * @return mixed[][]
 	 */
 	public function export($object, $fields = [])
 	{
-		// TODO Export current configuration to array
 		foreach ($this->_getFields($object, $fields) as $name)
 		{
 			// If object, recurse
 			if (is_object($object->$name))
 			{
 				$data[$name] = $this->export($object->$name);
-				$data[$this->classField] = get_class($object->$name);
 			}
 			else
 			{
 				$data[$name] = $object->$name;
 			}
 		}
+		$data[$this->classField] = get_class($object);
 		return $data;
 	}
 

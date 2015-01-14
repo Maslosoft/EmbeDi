@@ -13,7 +13,8 @@
 		"issues": "https://github.com/Maslosoft/EmbeDi/issues"
 	},
 	"require-dev": {
-		"maslosoft/embeditest": "dev-master"
+		"maslosoft/embeditest": "dev-master",
+		"maslosoft/hedron": "~1.1"
 	},
 	"autoload": {
 		"psr-4": {
