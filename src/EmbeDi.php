@@ -122,6 +122,7 @@ class EmbeDi
 	 */
 	public function export($object, $fields = [])
 	{
+		$data = [];
 		foreach ($this->_getFields($object, $fields) as $name)
 		{
 			// If object, recurse
