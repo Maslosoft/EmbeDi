@@ -348,12 +348,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maslosoft/EmbeDiTest.git",
-                "reference": "17725a1311929b8ed829c5b4ff65617b52268a23"
+                "reference": "cc2980c46a29e65eadf86ce6b54b99553fdf6773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maslosoft/EmbeDiTest/zipball/17725a1311929b8ed829c5b4ff65617b52268a23",
-                "reference": "17725a1311929b8ed829c5b4ff65617b52268a23",
+                "url": "https://api.github.com/repos/Maslosoft/EmbeDiTest/zipball/cc2980c46a29e65eadf86ce6b54b99553fdf6773",
+                "reference": "cc2980c46a29e65eadf86ce6b54b99553fdf6773",
                 "shasum": ""
             },
             "require": {
@@ -378,7 +378,7 @@
                     "role": "Developer"
                 }
             ],
-            "time": "2015-01-20 14:08:45"
+            "time": "2015-01-20 15:01:02"
         },
         {
             "name": "maslosoft/hedron",
