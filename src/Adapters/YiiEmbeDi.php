@@ -22,9 +22,18 @@ use Maslosoft\EmbeDi\EmbeDi;
 class YiiEmbeDi extends EmbeDi
 {
 
+	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $config = [])
+	{
+		parent::__construct($instanceId, $config);
+		$this->setAdapters([new YiiAdapter]);
+	}
+
+	/**
+	 * Required by Yii
+	 */
 	public function init()
 	{
-
+		// Could init something here
 	}
 
 }

@@ -13,7 +13,6 @@
 namespace Maslosoft\EmbeDi\Adapters;
 
 use Exception;
-use Maslosoft\EmbeDi\EmbeDi;
 use Maslosoft\EmbeDi\Interfaces\IAdapter;
 use Yii;
 
@@ -40,7 +39,7 @@ class YiiAdapter implements IAdapter
 		{
 			if(is_object($config[$instanceId]))
 			{
-				return (new EmbeDi())->export($config[$instanceId]);
+				return (new YiiEmbeDi())->export($config[$instanceId]);
 			}
 			if(isset($config[$instanceId]['class']) && $config[$instanceId]['class'] == $class)
 			{

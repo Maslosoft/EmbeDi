@@ -68,24 +68,24 @@ class EmbeDi
 		$this->storage = new EmbeDiStore(__CLASS__, 'embedi');
 	}
 	
-	public function &__get($name)
+	public function __get($name)
 	{
 		$methodName = sprintf('get%s', ucfirst($name));
 		return $this->$methodName();
 	}
 
-	public function &__set($name, $value)
+	public function __set($name, $value)
 	{
 		$methodName = sprintf('set%s', ucfirst($name));
 		return $this->$methodName($value);
 	}
 
-	public function &getAdapters()
+	public function getAdapters()
 	{
 		return $this->storage->adapters;
 	}
 
-	public function &setAdapters($adapters)
+	public function setAdapters($adapters)
 	{
 		$instances = [];
 		foreach ($adapters as $adapter)
@@ -113,7 +113,10 @@ class EmbeDi
 
 	public function addAdapter(IAdapter $adapter)
 	{
-		$this->storage->adapters[] = $adapter;
+		// Workaround for indirect modification of overloaded property
+		$adapters = $this->storage->adapters;
+		$adapters[] = $adapter;
+		$this->storage->adapters = $adapters;
 	}
 
 	/**
