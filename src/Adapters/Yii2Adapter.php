@@ -12,8 +12,8 @@
 
 namespace Maslosoft\EmbeDi\Adapters;
 
+use Exception;
 use Maslosoft\EmbeDi\EmbeDi;
-use SebastianBergmann\GlobalState\Exception;
 use Yii;
 
 /**
@@ -32,13 +32,12 @@ class Yii2Adapter
 		}
 	}
 
-
 	public function getConfig($class, $instanceId)
 	{
 		/**
 		 * TODO Figure out if there is some better way to obtain config
 		 */
-		if(Yii::$app->has($instanceId))
+		if (Yii::$app->has($instanceId))
 		{
 			return (new EmbeDi())->export(Yii::$app->get($instanceId));
 		}
