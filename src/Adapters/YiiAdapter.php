@@ -12,9 +12,9 @@
 
 namespace Maslosoft\EmbeDi\Adapters;
 
+use Exception;
 use Maslosoft\EmbeDi\EmbeDi;
 use Maslosoft\EmbeDi\Interfaces\IAdapter;
-use SebastianBergmann\GlobalState\Exception;
 use Yii;
 
 /**
