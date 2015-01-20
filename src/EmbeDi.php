@@ -12,6 +12,9 @@
 
 namespace Maslosoft\EmbeDi;
 
+use InvalidArgumentException;
+use Maslosoft\EmbeDi\Interfaces\IAdapter;
+use Maslosoft\EmbeDi\Storage\EmbeDiStore;
 use ReflectionObject;
 use ReflectionProperty;
 
@@ -41,17 +44,76 @@ class EmbeDi
 
 	/**
 	 * Storage container
-	 * @var DiStore
+	 * @var EmbeDiStore
 	 */
 	private $storage = null;
+
+	/**
+	 *
+	 * @var IAdapter
+	 */
+	private $adapters = [];
 
 	/**
 	 * Create container with provided id
 	 * @param string $instanceId
 	 */
-	public function __construct($instanceId = EmbeDi::DefaultInstanceId)
+	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $config = [])
 	{
 		$this->_instanceId = $instanceId;
+		if ($config)
+		{
+			$this->apply($config, $this);
+		}
+		$this->storage = new EmbeDiStore(__CLASS__, 'embedi');
+	}
+	
+	public function &__get($name)
+	{
+		$methodName = sprintf('get%s', ucfirst($name));
+		return $this->$methodName();
+	}
+
+	public function &__set($name, $value)
+	{
+		$methodName = sprintf('set%s', ucfirst($name));
+		return $this->$methodName($value);
+	}
+
+	public function &getAdapters()
+	{
+		return $this->storage->adapters;
+	}
+
+	public function &setAdapters($adapters)
+	{
+		$instances = [];
+		foreach ($adapters as $adapter)
+		{
+			// Assuming class name
+			if (is_string($adapter))
+			{
+				$instances[] = new $adapter;
+				continue;
+			}
+			// Set directly
+			if ($adapter instanceof IAdapter)
+			{
+				$instances[] = $adapter;
+				continue;
+			}
+			else
+			{
+				throw new InvalidArgumentException(sprintf('Adapter of `%s->adapters` is of type `%s`, string (class name) or `%s` required', __CLASS__, gettype($adapter) == 'object' ? get_class($adapter) : gettype($adapter), IAdapter::class));
+			}
+		}
+		$this->storage->adapters = $instances;
+		return $this;
+	}
+
+	public function addAdapter(IAdapter $adapter)
+	{
+		$this->storage->adapters[] = $adapter;
 	}
 
 	/**
@@ -82,6 +144,18 @@ class EmbeDi
 				{
 					$object->$name = $value;
 				}
+			}
+			return;
+		}
+
+		// Try to find configuration in adapters
+		foreach ($this->storage->adapters as $adapter)
+		{
+			$config = $adapter->getConfig(get_class($object), $this->_instanceId);
+			if ($config)
+			{
+				$this->apply($config, $object);
+				return;
 			}
 		}
 	}

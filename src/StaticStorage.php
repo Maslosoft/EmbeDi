@@ -53,12 +53,15 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, I
 	 */
 	public static $values = [];
 
+	/**
+	 * 
+	 * @param object|string $owner
+	 * @param string $instanceId
+	 */
 	public function __construct($owner, $instanceId)
 	{
-		
-		assert(is_object($owner));
 		$this->ns = get_class($this);
-		$this->ownerId = get_class($owner);
+		$this->ownerId = is_object($owner) ? get_class($owner) : $owner;
 		$this->instanceId = $instanceId;
 		// Gracefully init - this is required for subsequent constructor calls
 		if (!array_key_exists($this->ns, self::$values))
@@ -195,7 +198,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, I
 			if (!$property->isStatic())
 			{
 				$name = $property->name;
-				if(!array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->instanceId]))
+				if (!array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->instanceId]))
 				{
 					$this->__set($name, $this->$name);
 				}
