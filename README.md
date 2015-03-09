@@ -4,11 +4,12 @@
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/build-status/master)
+<img src="https://travis-ci.org/Maslosoft/EmbeDi.svg?branch=master" style="height:18px"/>
+[![HHVM Status](http://hhvm.h4cc.de/badge/maslosoft/embedi.svg)](http://hhvm.h4cc.de/package/maslosoft/embedi)
 
 ## Instalation
 
-	composer require maslosoft/embedi
+	composer require maslosoft/embedi:"*"
 
 ## Resources
 
