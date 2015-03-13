@@ -2,7 +2,7 @@
 <!-- Auto generated do not modify between `header` and `/header` -->
 
 # <a href="http://maslosoft.com/embedi/">Maslosoft Embedi</a>
-<a href="http://maslosoft.com/embedi/">__</a>
+<a href="http://maslosoft.com/embedi/">_Embedded DI container_</a>
 
 <a href="https://packagist.org/packages/maslosoft/embedi" title="Latest Stable Version">
 <img src="https://poser.pugx.org/maslosoft/embedi/v/stable.svg" alt="Latest Stable Version" style="height: 20px;"/>
@@ -16,7 +16,7 @@
 
 ### Quick Install
 ```bash
-	composer require maslosoft/embedi:"*"
+composer require maslosoft/embedi:"*"
 ```
 
 <!--/header-->

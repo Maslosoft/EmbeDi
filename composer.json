@@ -1,5 +1,6 @@
 {
 	"name": "maslosoft/embedi",
+	"description": "Embedded DI container",
 	"license": [
 		"AGPL",
 		"Commercial"
@@ -23,6 +24,5 @@
 		"psr-4": {
 			"Maslosoft\\EmbeDi\\": "src/"
 		}
-	},
-	"description": ""
+	}
 }
