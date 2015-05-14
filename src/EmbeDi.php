@@ -14,6 +14,7 @@ namespace Maslosoft\EmbeDi;
 
 use InvalidArgumentException;
 use Maslosoft\EmbeDi\Interfaces\IAdapter;
+use Maslosoft\EmbeDi\Source\SourceManager;
 use Maslosoft\EmbeDi\Storage\EmbeDiStore;
 use ReflectionObject;
 use ReflectionProperty;
@@ -55,6 +56,12 @@ class EmbeDi
 	private $adapters = [];
 
 	/**
+	 * Configs source manager
+	 * @var SourceManager
+	 */
+	private $sm = null;
+
+	/**
 	 * Create container with provided id
 	 * @param string $instanceId
 	 */
@@ -65,7 +72,8 @@ class EmbeDi
 		{
 			$this->apply($config, $this);
 		}
-		$this->storage = new EmbeDiStore(__CLASS__, 'embedi');
+		$this->storage = new EmbeDiStore(__CLASS__);
+		$this->sm = new SourceManager($instanceId);
 	}
 
 	public function __get($name)
@@ -111,12 +119,25 @@ class EmbeDi
 		return $this;
 	}
 
+	/**
+	 * Add configuration adapter
+	 * @param IAdapter $adapter
+	 */
 	public function addAdapter(IAdapter $adapter)
 	{
 		// Workaround for indirect modification of overloaded property
 		$adapters = $this->storage->adapters;
 		$adapters[] = $adapter;
 		$this->storage->adapters = $adapters;
+	}
+
+	/**
+	 * Add configuration source for later use
+	 * @param mixed[] $source
+	 */
+	public function addConfig($source)
+	{
+		$this->sm->add($source);
 	}
 
 	/**
@@ -179,6 +200,12 @@ class EmbeDi
 		}
 		foreach ($configuration as $name => $value)
 		{
+			if (strpos($name, '@') === 0)
+			{
+				$name = substr($name, 1);
+				$object->$name = $this->sm->get($value);
+				continue;
+			}
 			if (is_array($value) && array_key_exists($this->classField, $value))
 			{
 				$object->$name = $this->apply($value);
