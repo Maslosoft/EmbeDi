@@ -67,7 +67,7 @@ class EmbeDi
 		}
 		$this->storage = new EmbeDiStore(__CLASS__, 'embedi');
 	}
-	
+
 	public function __get($name)
 	{
 		$methodName = sprintf('get%s', ucfirst($name));
@@ -216,12 +216,12 @@ class EmbeDi
 		return $data;
 	}
 
-	public function store($object, $fields = [])
+	public function store($object, $fields = [], $update = false)
 	{
 		$storage = new DiStore($object, $this->_instanceId);
 
 		// Do not modify stored instance
-		if ($this->isStored($object))
+		if ($this->isStored($object) && !$update)
 		{
 			return $storage;
 		}
