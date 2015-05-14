@@ -72,20 +72,20 @@ class EmbeDi
 		{
 			$this->apply($config, $this);
 		}
-		$this->storage = new EmbeDiStore(__CLASS__);
+		$this->storage = new EmbeDiStore(__CLASS__, EmbeDiStore::StoreId);
 		$this->sm = new SourceManager($instanceId);
 	}
 
 	public function __get($name)
 	{
 		$methodName = sprintf('get%s', ucfirst($name));
-		return $this->$methodName();
+		return $this->{$methodName}();
 	}
 
 	public function __set($name, $value)
 	{
 		$methodName = sprintf('set%s', ucfirst($name));
-		return $this->$methodName($value);
+		return $this->{$methodName}($value);
 	}
 
 	public function getAdapters()
@@ -133,6 +133,21 @@ class EmbeDi
 
 	/**
 	 * Add configuration source for later use
+	 * Config should have keys of component id and values of config.
+	 * Example:
+	 * ```
+	 * [
+	 * 		'logger' => [
+	 * 			'class' => Monolog\Logger\Logger,
+	 * 		],
+	 * 		'mangan' => [
+	 * 			'@logger' => 'logger'
+	 * 		]
+	 * ]
+	 * ```
+	 * Attributes starting with `@` denotes that link to other
+	 * config component should be used. In example above, mangan field `logger`
+	 * will be configured with monolog logger.
 	 * @param mixed[] $source
 	 */
 	public function addConfig($source)
@@ -141,7 +156,7 @@ class EmbeDi
 	}
 
 	/**
-	 * Whenever current configuration is stored
+	 * Check whenever current configuration is stored.
 	 * @return bool
 	 */
 	public function isStored($object)
@@ -149,6 +164,13 @@ class EmbeDi
 		return (new DiStore($object, $this->_instanceId))->stored;
 	}
 
+	/**
+	 * Configure existing object from previously stored configuration.
+	 * Typically this will will be called in your class constructor.
+	 * Will try to find configuration in adapters if it's not stored.
+	 * @param object $object
+	 * @return object
+	 */
 	public function configure($object)
 	{
 		$storage = new DiStore($object, $this->_instanceId);
@@ -185,9 +207,28 @@ class EmbeDi
 	}
 
 	/**
-	 * Apply configuration to object from array
+	 * Apply configuration to object from array.
+	 *
+	 * This can also create object if passed configuration array have `class` field.
+	 *
+	 * Example of creating object:
+	 * ```
+	 * $config = [
+	 * 		'class' => Vendor\Component::class,
+	 * 		'title' => 'bar'
+	 * ];
+	 * (new Embedi)->apply($config);
+	 * ```
+	 *
+	 * Example of applying config to existing object:
+	 * ```
+	 * $config = [
+	 * 		'title' => 'bar'
+	 * ];
+	 * (new Embedi)->apply($config, new Vendor\Component);
+	 * ```
 	 * @param mixed[][] $configuration
-	 * @param object $object
+	 * @param object $object Object to configure, set to null to create new one
 	 * @return object
 	 */
 	public function apply($configuration, $object = null)
@@ -243,6 +284,60 @@ class EmbeDi
 		return $data;
 	}
 
+	/**
+	 * Store object configuration.
+	 *
+	 * This will be typically called in init method of your component.
+	 * After storing config, configuration will be available in `configure` method.
+	 * `configure` method should be called in your class constructor.
+	 *
+	 * If you store config and have `configure` method call,
+	 * after subsequent creations of your component will be configured by EmbeDi.
+	 *
+	 * Both methods could be called in constructor, if you don't need additional
+	 * initialization code after configuring object.
+	 *
+	 * Example workflow:
+	 * ```
+	 * class Component
+	 * {
+	 * 		public $title = '';
+	 *
+	 * 		public function __construct()
+	 * 		{
+	 * 			(new EmbeDi)->configure($this);
+	 * 		}
+	 *
+	 * 		public function init()
+	 * 		{
+	 * 			(new EmbeDi)->store($this);
+	 * 		}
+	 * }
+	 *
+	 * $c1 = new Component();
+	 * $c1->title = 'foo';
+	 * $c1->init();
+	 *
+	 * $c2 = new Component();
+	 *
+	 * echo $c2->title; // 'foo'
+	 * ```
+	 *
+	 * Parameter `$fields` tell's EmbeDi to store only subset of class fields.
+	 * Example:
+	 * ```
+	 * (new EmbeDi)->store($this, ['title']);
+	 * ```
+	 *
+	 * Parameter `$update` tell's EmbeDi to update existing configuration.
+	 * By default configuration is not ovveriden on subsequent `store` calls.
+	 * This is done on purpose, to not mess basic configuration.
+	 *
+	 * @param object $object Object to store
+	 * @param string[] $fields Fields to store
+	 * @param bool $update Whenever to update existing configuration
+	 * @return mixed[] Stored data
+	 */
 	public function store($object, $fields = [], $update = false)
 	{
 		$storage = new DiStore($object, $this->_instanceId);
@@ -276,6 +371,13 @@ class EmbeDi
 		return $data;
 	}
 
+	/**
+	 * Get class fields of object. By default all public and non static fields are returned.
+	 * This can be ovverriden by passing `$fields` names of fields. These are not checked for existence.
+	 * @param object $object
+	 * @param string[] $fields
+	 * @return string[]
+	 */
 	private function _getFields($object, $fields)
 	{
 		if (!$fields)

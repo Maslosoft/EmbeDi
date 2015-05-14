@@ -36,9 +36,4 @@ class EmbeDiStore extends StaticStorage
 	 */
 	public $adapters = [];
 
-	public function __construct($owner, $instanceId = self::StoreId)
-	{
-		parent::__construct($owner, $instanceId);
-	}
-
 }
