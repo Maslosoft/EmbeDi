@@ -10,7 +10,7 @@
  *
  */
 
-namespace Maslosoft\EmbeDi\Source;
+namespace Maslosoft\EmbeDi\Managers;
 
 use Maslosoft\EmbeDi\EmbeDi;
 use Maslosoft\EmbeDi\Storage\SourceStorage;

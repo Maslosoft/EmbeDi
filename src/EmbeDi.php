@@ -14,7 +14,7 @@ namespace Maslosoft\EmbeDi;
 
 use InvalidArgumentException;
 use Maslosoft\EmbeDi\Interfaces\IAdapter;
-use Maslosoft\EmbeDi\Source\SourceManager;
+use Maslosoft\EmbeDi\Managers\SourceManager;
 use Maslosoft\EmbeDi\Storage\EmbeDiStore;
 use ReflectionObject;
 use ReflectionProperty;
