@@ -1,10 +1,10 @@
 <?php
 
 /**
- * This software package is licensed under New BSD license.
+ * This software package is licensed under `AGPL, Commercial` license[s].
  *
  * @package maslosoft/embedi
- * @licence New BSD
+ * @license AGPL, Commercial
  *
  * @copyright Copyright (c) Peter Maselkowski <pmaselkowski@gmail.com>
  *
@@ -23,6 +23,11 @@ use Maslosoft\EmbeDi\StaticStorage;
 class EmbeDiStore extends StaticStorage
 {
 
+	/**
+	 * This is required for adapters
+	 */
+	const StoreId = 'embedi';
+
 	public $stored = false;
 
 	/**
@@ -30,4 +35,10 @@ class EmbeDiStore extends StaticStorage
 	 * @var IAdapter[]
 	 */
 	public $adapters = [];
+
+	public function __construct($owner, $instanceId = self::StoreId)
+	{
+		parent::__construct($owner, $instanceId);
+	}
+
 }
