@@ -27,7 +27,11 @@ use ReflectionProperty;
 class EmbeDi
 {
 
-	const DefaultInstanceId = 'default';
+	/**
+	 * TODO Check if name `embedi` is ok.
+	 * This is default instance name, and ocmponent name.
+	 */
+	const DefaultInstanceId = 'embedi';
 
 	/**
 	 * Class field in configuration arrays
@@ -73,6 +77,10 @@ class EmbeDi
 			$this->apply($config, $this);
 		}
 		$this->storage = new EmbeDiStore(__CLASS__, EmbeDiStore::StoreId);
+
+		/**
+		 * TODO Pass $this as second param
+		 */
 		$this->sm = new SourceManager($instanceId);
 	}
 
@@ -93,6 +101,9 @@ class EmbeDi
 		return $this->storage->adapters;
 	}
 
+	/**
+	 * TODO Create AdaptersManager
+	 */
 	public function setAdapters($adapters)
 	{
 		$instances = [];
@@ -121,14 +132,12 @@ class EmbeDi
 
 	/**
 	 * Add configuration adapter
+	 * TODO Create AdaptersManager
 	 * @param IAdapter $adapter
 	 */
 	public function addAdapter(IAdapter $adapter)
 	{
-		// Workaround for indirect modification of overloaded property
-		$adapters = $this->storage->adapters;
-		$adapters[] = $adapter;
-		$this->storage->adapters = $adapters;
+		$this->storage->adapters[] = $adapter;
 	}
 
 	/**
@@ -168,6 +177,8 @@ class EmbeDi
 	 * Configure existing object from previously stored configuration.
 	 * Typically this will will be called in your class constructor.
 	 * Will try to find configuration in adapters if it's not stored.
+	 * TODO Use SourceManager here, before adapters
+	 * TODO Create AdaptersManager and use here
 	 * @param object $object
 	 * @return object
 	 */
@@ -373,14 +384,14 @@ class EmbeDi
 
 	/**
 	 * Get class fields of object. By default all public and non static fields are returned.
-	 * This can be ovverriden by passing `$fields` names of fields. These are not checked for existence.
+	 * This can be overridden by passing `$fields` names of fields. These are not checked for existence.
 	 * @param object $object
 	 * @param string[] $fields
 	 * @return string[]
 	 */
 	private function _getFields($object, $fields)
 	{
-		if (!$fields)
+		if (empty($fields))
 		{
 			foreach ((new ReflectionObject($object))->getProperties(ReflectionProperty::IS_PUBLIC) as $property)
 			{

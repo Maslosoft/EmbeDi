@@ -18,7 +18,8 @@
 	},
 	"require-dev": {
 		"maslosoft/embeditest": "dev-master",
-		"maslosoft/hedron": "~1"
+		"maslosoft/hedron": "~1",
+		"maslosoft/zamm": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {

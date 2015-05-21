@@ -54,7 +54,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, I
 	public static $values = [];
 
 	/**
-	 * 
+	 *
 	 * @param object|string $owner
 	 * @param string $instanceId
 	 */
@@ -102,7 +102,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, I
 		self::$values = [];
 	}
 
-	public function __get($name)
+	public function &__get($name)
 	{
 		return self::$values[$this->ns][$this->ownerId][$this->instanceId][$name];
 	}
