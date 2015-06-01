@@ -189,6 +189,9 @@ class EmbeDi
 		// Only configure if stored
 		if ($this->isStored($object))
 		{
+			/**
+			 * TODO Use apply() here
+			 */
 			foreach ($storage->data as $name => $value)
 			{
 				$class = $storage->classes[$name];
@@ -238,12 +241,22 @@ class EmbeDi
 	 * ];
 	 * (new Embedi)->apply($config, new Vendor\Component);
 	 * ```
-	 * @param mixed[][] $configuration
+	 *
+	 * If `$configuration` arguments is string, it will simply instantiate class:
+	 * ```
+	 * (new Embedi)->apply('Vendor\Package\Component');
+	 * ```
+	 *
+	 * @param string|mixed[][] $configuration
 	 * @param object $object Object to configure, set to null to create new one
 	 * @return object
 	 */
 	public function apply($configuration, $object = null)
 	{
+		if (is_string($configuration))
+		{
+			return new $configuration;
+		}
 		if (null === $object && array_key_exists($this->classField, $configuration))
 		{
 			$className = $configuration[$this->classField];
