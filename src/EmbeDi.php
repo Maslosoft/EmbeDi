@@ -265,6 +265,10 @@ class EmbeDi
 		}
 		foreach ($configuration as $name => $value)
 		{
+			if ($name === $this->classField)
+			{
+				continue;
+			}
 			if (strpos($name, '@') === 0)
 			{
 				$name = substr($name, 1);
@@ -295,6 +299,10 @@ class EmbeDi
 		foreach ($this->_getFields($object, $fields) as $name)
 		{
 			// If object, recurse
+			if (!isset($object->$name))
+			{
+				continue;
+			}
 			if (is_object($object->$name))
 			{
 				$data[$name] = $this->export($object->$name);
