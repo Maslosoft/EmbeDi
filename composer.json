@@ -25,5 +25,8 @@
 		"psr-4": {
 			"Maslosoft\\EmbeDi\\": "src/"
 		}
+	},
+	"require": {
+		"codeception/specify": "*"
 	}
 }
