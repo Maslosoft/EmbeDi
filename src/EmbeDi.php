@@ -72,7 +72,7 @@ class EmbeDi
 	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $config = [])
 	{
 		$this->_instanceId = $instanceId;
-		if ($config)
+		if (!empty($config))
 		{
 			$this->apply($config, $this);
 		}
