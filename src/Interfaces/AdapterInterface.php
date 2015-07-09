@@ -16,11 +16,12 @@ namespace Maslosoft\EmbeDi\Interfaces;
  *
  * @author Piotr Maselkowski <pmaselkowski at gmail.com>
  */
-interface IMassAssigned
+interface AdapterInterface
 {
-	public function getAll();
-
-	public function setAll($values);
-
-	public function removeAll();
+	/**
+	 * Get configuration for specified class and instance id
+	 * @param string $class
+	 * @param string $instanceId
+	 */
+	public function getConfig($class, $instanceId);
 }

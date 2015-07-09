@@ -13,7 +13,7 @@
 namespace Maslosoft\EmbeDi\Adapters;
 
 use Exception;
-use Maslosoft\EmbeDi\Interfaces\IAdapter;
+use Maslosoft\EmbeDi\Interfaces\AdapterInterface;
 use Yii;
 
 /**
@@ -21,7 +21,7 @@ use Yii;
  *
  * @author Piotr Maselkowski <pmaselkowski at gmail.com>
  */
-class YiiAdapter implements IAdapter
+class YiiAdapter implements AdapterInterface
 {
 
 	public function __construct()

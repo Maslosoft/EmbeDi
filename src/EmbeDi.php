@@ -13,7 +13,7 @@
 namespace Maslosoft\EmbeDi;
 
 use InvalidArgumentException;
-use Maslosoft\EmbeDi\Interfaces\IAdapter;
+use Maslosoft\EmbeDi\Interfaces\AdapterInterface;
 use Maslosoft\EmbeDi\Managers\SourceManager;
 use Maslosoft\EmbeDi\Storage\EmbeDiStore;
 use ReflectionObject;
@@ -55,7 +55,7 @@ class EmbeDi
 
 	/**
 	 *
-	 * @var IAdapter
+	 * @var AdapterInterface
 	 */
 	private $adapters = [];
 
@@ -116,14 +116,14 @@ class EmbeDi
 				continue;
 			}
 			// Set directly
-			if ($adapter instanceof IAdapter)
+			if ($adapter instanceof AdapterInterface)
 			{
 				$instances[] = $adapter;
 				continue;
 			}
 			else
 			{
-				throw new InvalidArgumentException(sprintf('Adapter of `%s->adapters` is of type `%s`, string (class name) or `%s` required', __CLASS__, gettype($adapter) == 'object' ? get_class($adapter) : gettype($adapter), IAdapter::class));
+				throw new InvalidArgumentException(sprintf('Adapter of `%s->adapters` is of type `%s`, string (class name) or `%s` required', __CLASS__, gettype($adapter) == 'object' ? get_class($adapter) : gettype($adapter), AdapterInterface::class));
 			}
 		}
 		$this->storage->adapters = $instances;
@@ -133,9 +133,9 @@ class EmbeDi
 	/**
 	 * Add configuration adapter
 	 * TODO Create AdaptersManager
-	 * @param IAdapter $adapter
+	 * @param AdapterInterface $adapter
 	 */
-	public function addAdapter(IAdapter $adapter)
+	public function addAdapter(AdapterInterface $adapter)
 	{
 		$this->storage->adapters[] = $adapter;
 	}

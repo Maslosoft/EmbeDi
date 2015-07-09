@@ -12,7 +12,7 @@
 
 namespace Maslosoft\EmbeDi\Storage;
 
-use Maslosoft\EmbeDi\Interfaces\IAdapter;
+use Maslosoft\EmbeDi\Interfaces\AdapterInterface;
 use Maslosoft\EmbeDi\StaticStorage;
 
 /**
@@ -32,7 +32,7 @@ class EmbeDiStore extends StaticStorage
 
 	/**
 	 * Adapters
-	 * @var IAdapter[]
+	 * @var AdapterInterface[]
 	 */
 	public $adapters = [];
 

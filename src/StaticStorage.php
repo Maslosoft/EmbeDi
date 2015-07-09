@@ -15,7 +15,7 @@ namespace Maslosoft\EmbeDi;
 use ArrayAccess;
 use Countable;
 use Iterator;
-use Maslosoft\EmbeDi\Interfaces\IMassAssigned;
+use Maslosoft\EmbeDi\Interfaces\MassAssignedInterface;
 use ReflectionObject;
 use ReflectionProperty;
 use Serializable;
@@ -26,7 +26,7 @@ use Serializable;
  *
  * @author Piotr Maselkowski <pmaselkowski at gmail.com>
  */
-class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, IMassAssigned
+class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, MassAssignedInterface
 {
 
 	/**

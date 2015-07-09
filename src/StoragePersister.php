@@ -12,7 +12,7 @@
 
 namespace Maslosoft\EmbeDi;
 
-use Maslosoft\EmbeDi\Interfaces\IMassAssigned;
+use Maslosoft\EmbeDi\Interfaces\MassAssignedInterface;
 
 /**
  * StoragePersister
@@ -24,7 +24,7 @@ class StoragePersister
 
 	/**
 	 * Mass assigned storage interface
-	 * @var IMassAssigned
+	 * @var MassAssignedInterface
 	 */
 	private $storage = null;
 
@@ -34,7 +34,7 @@ class StoragePersister
 	 */
 	private $path = '';
 
-	public function __construct(IMassAssigned $storage, $path)
+	public function __construct(MassAssignedInterface $storage, $path)
 	{
 		$this->storage = $storage;
 		$this->path = $path;
