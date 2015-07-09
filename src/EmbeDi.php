@@ -54,12 +54,6 @@ class EmbeDi
 	private $storage = null;
 
 	/**
-	 *
-	 * @var AdapterInterface
-	 */
-	private $adapters = [];
-
-	/**
 	 * Configs source manager
 	 * @var SourceManager
 	 */
