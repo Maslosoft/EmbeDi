@@ -60,6 +60,12 @@ class EmbeDi
 	private $sm = null;
 
 	/**
+	 * Flyweight instances of EmbeDi
+	 * @var EmbeDi[]
+	 */
+	private static $_instances = [];
+
+	/**
 	 * Create container with provided id
 	 * @param string $instanceId
 	 */
@@ -76,6 +82,9 @@ class EmbeDi
 		 * TODO Pass $this as second param
 		 */
 		$this->sm = new SourceManager($instanceId);
+
+		// Assign flyweight instance
+		self::$_instances[$instanceId] = $this;
 	}
 
 	public function __get($name)
@@ -88,6 +97,41 @@ class EmbeDi
 	{
 		$methodName = sprintf('set%s', ucfirst($name));
 		return $this->{$methodName}($value);
+	}
+
+	/**
+	 * Get flyweight instance of embedi.
+	 * This will create instance only if `$instanceId` insntace id does not exists.
+	 * If named instance exists, or was ever create - existing instance will be used.
+	 * Use this function especially when require many `EmbeDi` calls,
+	 * for instance when creating `EmbeDi` in loops:
+	 * ```php
+	 * foreach($configs as $config)
+	 * {
+	 * 		(new EmbeDi)->apply($config);
+	 * }
+	 * ```
+	 * In abowe example at each loop iteration new `EmbeDi` instance is created.
+	 * While it is still lightweight, it's unnessesary overhead.
+	 *
+	 * This can be made in slightly more optimized way by using `fly` function:
+	 * ```php
+	 * foreach($configs as $config)
+	 * {
+	 * 		EmbeDi::fly()->apply($config);
+	 * }
+	 * ```
+	 * In above example only one instance of `EmbeDi` is used.
+	 * @param string $instanceId
+	 * @return EmbeDi
+	 */
+	public static function fly($instanceId = EmbeDi::DefaultInstanceId)
+	{
+		if (empty(self::$_instances[$instanceId]))
+		{
+			self::$_instances[$instanceId] = new static($instanceId);
+		}
+		return self::$_instances[$instanceId];
 	}
 
 	public function getAdapters()
