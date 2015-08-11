@@ -84,7 +84,10 @@ class EmbeDi
 		$this->sm = new SourceManager($instanceId);
 
 		// Assign flyweight instance
-		self::$_instances[$instanceId] = $this;
+		if (empty(self::$_instances[$instanceId]))
+		{
+			self::$_instances[$instanceId] = $this;
+		}
 	}
 
 	public function __get($name)
