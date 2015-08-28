@@ -28,8 +28,7 @@ class EmbeDi
 {
 
 	/**
-	 * TODO Check if name `embedi` is ok.
-	 * This is default instance name, and ocmponent name.
+	 * This is default instance name, and component name.
 	 */
 	const DefaultInstanceId = 'embedi';
 
