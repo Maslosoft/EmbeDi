@@ -11,8 +11,9 @@
 <img src="https://poser.pugx.org/maslosoft/embedi/license.svg" alt="License" style="height: 20px;"/>
 </a>
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Maslosoft/Embedi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/Embedi/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Maslosoft/Embedi/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/Embedi/?branch=master)
 <img src="https://travis-ci.org/Maslosoft/Embedi.svg?branch=master"/>
-<img src="https://travis-ci.org/Maslosoft/Embedi.svg?branch=master"/>
+<img src="http://hhvm.h4cc.de/badge/maslosoft/embedi.svg?style=flat"/>
 
 ### Quick Install
 ```bash
