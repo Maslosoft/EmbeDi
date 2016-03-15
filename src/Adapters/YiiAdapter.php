@@ -34,14 +34,19 @@ class YiiAdapter implements AdapterInterface
 
 	public function getConfig($class, $instanceId)
 	{
-		$config = Yii::app()->getComponents(false);
+		$app = Yii::app();
+		if (empty($app))
+		{
+			return false;
+		}
+		$config = $app->getComponents(false);
 		if (isset($config[$instanceId]))
 		{
-			if(is_object($config[$instanceId]))
+			if (is_object($config[$instanceId]))
 			{
 				return (new YiiEmbeDi())->export($config[$instanceId]);
 			}
-			if(isset($config[$instanceId]['class']) && $config[$instanceId]['class'] == $class)
+			if (isset($config[$instanceId]['class']) && $config[$instanceId]['class'] == $class)
 			{
 				return $config[$instanceId];
 			}

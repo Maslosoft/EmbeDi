@@ -197,6 +197,7 @@ class EmbeDi
 	 * Attributes starting with `@` denotes that link to other
 	 * config component should be used. In example above, mangan field `logger`
 	 * will be configured with monolog logger.
+	 * @deprecated Use Maslosoft\EmbeDi\Adapters\ArrayAdapter instead
 	 * @param mixed[] $source
 	 */
 	public function addConfig($source)
