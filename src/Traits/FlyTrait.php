@@ -19,6 +19,12 @@ trait FlyTrait
 
 	private static $instances = [];
 
+	/**
+	 * Get flyweight instance of component
+	 * @param string $instanceId
+	 * @return static
+	 * @throws Exception
+	 */
 	public static function fly($instanceId = null)
 	{
 		if (null === $instanceId)
