@@ -49,17 +49,30 @@ class ArrayAdapter implements AdapterInterface
 		$this->config = $config;
 	}
 
-	public function getConfig($class, $instanceId)
+	public function getConfig($class, $instanceId, $presetId = null)
 	{
 		if (isset($this->config[$instanceId]))
 		{
-			if (is_object($this->config[$instanceId]))
+			if (!empty($presetId) && empty($this->config[$instanceId][$presetId]))
 			{
-				return (new YiiEmbeDi())->export($this->config[$instanceId]);
+				// Preset is provided, but no configuration for preset found, skip
+				return false;
 			}
-			if (isset($this->config[$instanceId]['class']) && $this->config[$instanceId]['class'] == $class)
+			$config = $this->config[$instanceId];
+
+			if (!empty($presetId))
 			{
-				return $this->config[$instanceId];
+				// Use preset
+				$config = $config[$presetId];
+			}
+
+			if (is_object($config))
+			{
+				return (new YiiEmbeDi())->export($config);
+			}
+			if (isset($config['class']) && $config['class'] == $class)
+			{
+				return $config;
 			}
 		}
 		return false;

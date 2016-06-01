@@ -47,6 +47,12 @@ class EmbeDi
 	private $_instanceId = '';
 
 	/**
+	 * Preset ID
+	 * @var string
+	 */
+	private $_presetId = '';
+
+	/**
 	 * Storage container
 	 * @var EmbeDiStore
 	 */
@@ -67,10 +73,13 @@ class EmbeDi
 	/**
 	 * Create container with provided id
 	 * @param string $instanceId
+	 * @param string $presetId If set will lookup configuration in depper array level
+	 * @param array $config Configuration of EmbeDi
 	 */
-	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $config = [])
+	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $presetId = null, $config = [])
 	{
 		$this->_instanceId = $instanceId;
+		$this->_presetId = $presetId;
 		if (!empty($config))
 		{
 			$this->apply($config, $this);
@@ -80,12 +89,19 @@ class EmbeDi
 		/**
 		 * TODO Pass $this as second param
 		 */
-		$this->sm = new SourceManager($instanceId);
-
-		// Assign flyweight instance
-		if (empty(self::$_instances[$instanceId]))
+		$this->sm = new SourceManager($instanceId, $presetId);
+		if (!empty($presetId))
 		{
-			self::$_instances[$instanceId] = $this;
+			$key = $instanceId . '.' . $presetId;
+		}
+		else
+		{
+			$key = $instanceId;
+		}
+		// Assign flyweight instance
+		if (empty(self::$_instances[$key]))
+		{
+			self::$_instances[$key] = $this;
 		}
 	}
 
@@ -127,13 +143,21 @@ class EmbeDi
 	 * @param string $instanceId
 	 * @return EmbeDi
 	 */
-	public static function fly($instanceId = EmbeDi::DefaultInstanceId)
+	public static function fly($instanceId = EmbeDi::DefaultInstanceId, $presetId = null)
 	{
-		if (empty(self::$_instances[$instanceId]))
+		if (!empty($presetId))
 		{
-			self::$_instances[$instanceId] = new static($instanceId);
+			$key = $instanceId . '.' . $presetId;
 		}
-		return self::$_instances[$instanceId];
+		else
+		{
+			$key = $instanceId;
+		}
+		if (empty(self::$_instances[$key]))
+		{
+			self::$_instances[$key] = new static($key);
+		}
+		return self::$_instances[$key];
 	}
 
 	public function getAdapters()
@@ -211,7 +235,7 @@ class EmbeDi
 	 */
 	public function isStored($object)
 	{
-		return (new DiStore($object, $this->_instanceId))->stored;
+		return (new DiStore($object, $this->_instanceId, $this->_presetId))->stored;
 	}
 
 	/**
@@ -225,7 +249,7 @@ class EmbeDi
 	 */
 	public function configure($object)
 	{
-		$storage = new DiStore($object, $this->_instanceId);
+		$storage = new DiStore($object, $this->_instanceId, $this->_presetId);
 
 		// Only configure if stored
 		if ($this->isStored($object))
@@ -252,7 +276,7 @@ class EmbeDi
 		// Try to find configuration in adapters
 		foreach ($this->storage->adapters as $adapter)
 		{
-			$config = $adapter->getConfig(get_class($object), $this->_instanceId);
+			$config = $adapter->getConfig(get_class($object), $this->_instanceId, $this->_presetId);
 			if ($config)
 			{
 				$this->apply($config, $object);

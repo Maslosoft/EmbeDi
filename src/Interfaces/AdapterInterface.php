@@ -18,10 +18,12 @@ namespace Maslosoft\EmbeDi\Interfaces;
  */
 interface AdapterInterface
 {
+
 	/**
 	 * Get configuration for specified class and instance id
 	 * @param string $class
 	 * @param string $instanceId
+	 * @param string $presetId
 	 */
-	public function getConfig($class, $instanceId);
+	public function getConfig($class, $instanceId, $presetId = null);
 }

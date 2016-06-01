@@ -32,7 +32,7 @@ class YiiAdapter implements AdapterInterface
 		}
 	}
 
-	public function getConfig($class, $instanceId)
+	public function getConfig($class, $instanceId, $presetId = null)
 	{
 		$app = Yii::app();
 		if (empty($app))
@@ -40,15 +40,28 @@ class YiiAdapter implements AdapterInterface
 			return false;
 		}
 		$config = $app->getComponents(false);
-		if (isset($config[$instanceId]))
+		if (!empty($config[$instanceId]))
 		{
-			if (is_object($config[$instanceId]))
+			if (!empty($presetId) && empty($config[$instanceId][$presetId]))
 			{
-				return (new YiiEmbeDi())->export($config[$instanceId]);
+				// Preset is provided, but no configuration for preset found, skip
+				return false;
 			}
-			if (isset($config[$instanceId]['class']) && $config[$instanceId]['class'] == $class)
+			if (!empty($presetId))
 			{
-				return $config[$instanceId];
+				$config = $config[$instanceId][$presetId];
+			}
+			else
+			{
+				$config = $config[$instanceId];
+			}
+			if (is_object($config))
+			{
+				return (new YiiEmbeDi())->export($config);
+			}
+			if (isset($config['class']) && $config['class'] == $class)
+			{
+				return $config;
 			}
 		}
 		return false;

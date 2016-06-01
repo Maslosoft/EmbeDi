@@ -48,6 +48,18 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 	private $instanceId = '';
 
 	/**
+	 * Preset ID
+	 * @var string
+	 */
+	private $presetId = '';
+
+	/**
+	 * Key for storage
+	 * @var string
+	 */
+	private $key = '';
+
+	/**
 	 * Stored values
 	 * @var mixed[][]
 	 */
@@ -58,11 +70,20 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 	 * @param object|string $owner
 	 * @param string $instanceId
 	 */
-	public function __construct($owner, $instanceId)
+	public function __construct($owner, $instanceId, $presetId = null)
 	{
 		$this->ns = get_class($this);
 		$this->ownerId = is_object($owner) ? get_class($owner) : $owner;
 		$this->instanceId = $instanceId;
+		$this->presetId = $presetId;
+		if (!empty($presetId))
+		{
+			$this->key = $this->instanceId . '.' . $this->presetId;
+		}
+		else
+		{
+			$this->key = $this->instanceId;
+		}
 		// Gracefully init - this is required for subsequent constructor calls
 		if (!array_key_exists($this->ns, self::$values))
 		{
@@ -72,26 +93,26 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 		{
 			self::$values[$this->ns][$this->ownerId] = [];
 		}
-		if (!array_key_exists($instanceId, self::$values[$this->ns][$this->ownerId]))
+		if (!array_key_exists($this->key, self::$values[$this->ns][$this->ownerId]))
 		{
-			self::$values[$this->ns][$this->ownerId][$instanceId] = [];
+			self::$values[$this->ns][$this->ownerId][$this->key] = [];
 		}
 		$this->_propertize();
 	}
 
 	public function getAll()
 	{
-		return self::$values[$this->ns][$this->ownerId][$this->instanceId];
+		return self::$values[$this->ns][$this->ownerId][$this->key];
 	}
 
 	public function setAll($values)
 	{
-		return self::$values[$this->ns][$this->ownerId][$this->instanceId] = $values;
+		return self::$values[$this->ns][$this->ownerId][$this->key] = $values;
 	}
 
 	public function removeAll()
 	{
-		self::$values[$this->ns][$this->ownerId][$this->instanceId] = [];
+		self::$values[$this->ns][$this->ownerId][$this->key] = [];
 	}
 
 	/**
@@ -104,22 +125,22 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 
 	public function &__get($name)
 	{
-		return self::$values[$this->ns][$this->ownerId][$this->instanceId][$name];
+		return self::$values[$this->ns][$this->ownerId][$this->key][$name];
 	}
 
 	public function __set($name, $value)
 	{
-		self::$values[$this->ns][$this->ownerId][$this->instanceId][$name] = $value;
+		self::$values[$this->ns][$this->ownerId][$this->key][$name] = $value;
 	}
 
 	public function __unset($name)
 	{
-		unset(self::$values[$this->ns][$this->ownerId][$this->instanceId][$name]);
+		unset(self::$values[$this->ns][$this->ownerId][$this->key][$name]);
 	}
 
 	public function __isset($name)
 	{
-		return isset(self::$values[$this->ns][$this->ownerId][$this->instanceId][$name]);
+		return isset(self::$values[$this->ns][$this->ownerId][$this->key][$name]);
 	}
 
 // <editor-fold defaultstate="collapsed" desc="Interfaces implementation">
@@ -198,7 +219,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 			if (!$property->isStatic())
 			{
 				$name = $property->name;
-				if (!array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->instanceId]))
+				if (!array_key_exists($name, self::$values[$this->ns][$this->ownerId][$this->key]))
 				{
 					$this->__set($name, $this->$name);
 				}

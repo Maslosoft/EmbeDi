@@ -30,15 +30,22 @@ class SourceManager
 	private $_instanceId = '';
 
 	/**
+	 * Preset ID
+	 * @var string
+	 */
+	private $_presetId = '';
+
+	/**
 	 * Source storage
 	 * @var SourceStorage
 	 */
 	private $storage = null;
 
-	public function __construct($instanceId = EmbeDi::DefaultInstanceId)
+	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $presetId = null)
 	{
 		$this->_instanceId = $instanceId;
-		$this->storage = new SourceStorage(__CLASS__, $instanceId);
+		$this->_presetId = $presetId;
+		$this->storage = new SourceStorage(__CLASS__, $instanceId, $presetId);
 	}
 
 	public function add($source)
@@ -56,7 +63,7 @@ class SourceManager
 			{
 				if ($name === $configName)
 				{
-					return (new EmbeDi($this->_instanceId))->apply($config);
+					return EmbeDi::fly($this->_instanceId, $this->_presetId)->apply($config);
 				}
 			}
 		}
