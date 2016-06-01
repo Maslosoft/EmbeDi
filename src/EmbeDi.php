@@ -155,7 +155,7 @@ class EmbeDi
 		}
 		if (empty(self::$_instances[$key]))
 		{
-			self::$_instances[$key] = new static($key);
+			self::$_instances[$key] = new static($instanceId, $presetId);
 		}
 		return self::$_instances[$key];
 	}
