@@ -59,7 +59,28 @@ class YiiAdapter implements AdapterInterface
 			{
 				return (new YiiEmbeDi())->export($config);
 			}
-			if (isset($config['class']) && $config['class'] == $class)
+
+			// No class defined, skip
+			if (empty($config['class']))
+			{
+				return false;
+			}
+
+			// Direct class
+			if ($config['class'] == $class)
+			{
+				return $config;
+			}
+
+			// Subclass
+			$info = new \ReflectionClass($class);
+			if ($info->isSubclassOf($config['class']))
+			{
+				return $config;
+			}
+
+			// Interface
+			if ($info->implementsInterface($config['class']))
 			{
 				return $config;
 			}
