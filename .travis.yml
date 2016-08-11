@@ -1,4 +1,5 @@
 language: php
+sudo: false
 php:
   - 5.5
   - 5.6
@@ -7,15 +8,15 @@ php:
   - hhvm
 matrix:
   allow_failures:
-    - php:
-      - nightly
+    - php: nightly
+cache:
+  directories:
+    - vendor
 install:
-  - composer self-update
   - composer install --dev --prefer-dist
-  - composer update maslosoft/embeditest
-after_script:
-  - wget --no-check-certificate https://scrutinizer-ci.com/ocular.phar
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ocular.phar code-coverage:upload --repository=g/Maslosoft/EmbeDi --revision=`git rev-parse HEAD` --format=php-clover ./tests/_output/coverage.clover; fi;'
+  - rm -rf vendor/maslosoft/embeditest
+  - git clone https://github.com/Maslosoft/EmbediTest.git vendor/maslosoft/embeditest
+before_script:
+  - cd $TRAVIS_BUILD_DIR
 script:
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "hhvm" ] || [ "$TRAVIS_PHP_VERSION" == "nightly" ]; then vendor/bin/codecept run unit; fi;'
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then vendor/bin/codecept run unit --coverage --html --coverage-html=. --coverage-xml=./coverage.clover; fi;'
+  - bash run-travis
