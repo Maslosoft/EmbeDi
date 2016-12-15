@@ -25,5 +25,6 @@
 		"psr-4": {
 			"Maslosoft\\EmbeDi\\": "src/"
 		}
-	}
+	},
+	"homepage": "https://maslosoft.com/embedi/"
 }
