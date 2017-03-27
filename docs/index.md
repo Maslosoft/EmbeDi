@@ -37,3 +37,4 @@ $config = [
 EmbeDi::fly()->addAdapter(new ArrayAdapter($config));
 ```
 
+Check [this repository for working example](https://github.com/MaslosoftGuides/embedi.quick-start).
