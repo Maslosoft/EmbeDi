@@ -1,4 +1,4 @@
-<template>docs</template>
+<title>Documentation</title>
 
 # Documentation
 
@@ -35,6 +35,14 @@ $config = [
 	]
 ];
 EmbeDi::fly()->addAdapter(new ArrayAdapter($config));
+```
+
+Now when creating instance of addendum, it will have pre-configured `checkMTime`
+property:
+
+```
+$ad = new Addendum;
+$ad->checkMTime; // Has value `true`
 ```
 
 Check [this repository for working example](https://github.com/MaslosoftGuides/embedi.quick-start).
