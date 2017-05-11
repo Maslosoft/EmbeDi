@@ -201,7 +201,7 @@ class EmbeDi
 	 */
 	public function addAdapter(AdapterInterface $adapter)
 	{
-		$this->storage->adapters[] = $adapter;
+		array_unshift($this->storage->adapters, $adapter);
 	}
 
 	/**
