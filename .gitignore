@@ -61,8 +61,4 @@ Desktop.ini
 *.un~
 Session.vim
 /vendor
-/models
-/unit
-/runtime
-/mock
-/page.html
+/runtime/*
