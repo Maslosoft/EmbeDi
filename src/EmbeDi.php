@@ -3,8 +3,8 @@
 /**
  * This software package is licensed under `AGPL, Commercial` license[s].
  *
- * @package maslosoft/embedi
- * @license AGPL, Commercial
+ * @package   maslosoft/embedi
+ * @license   AGPL, Commercial
  *
  * @copyright Copyright (c) Peter Maselkowski <pmaselkowski@gmail.com>
  *
@@ -71,12 +71,18 @@ class EmbeDi
 	private static $_instances = [];
 
 	/**
-	 * Create container with provided id
-	 * @param string $instanceId
-	 * @param string $presetId If set will lookup configuration in depper array level
-	 * @param array $config Configuration of EmbeDi
+	 * Version holder
+	 * @var ?string
 	 */
-	public function __construct($instanceId = EmbeDi::DefaultInstanceId, $presetId = null, $config = [])
+	private static ?string $versionNumber = null;
+
+	/**
+	 * Create container with provided id
+	 * @param string      $instanceId
+	 * @param string|null $presetId If set will lookup configuration in deeper array level
+	 * @param array       $config   Configuration of EmbeDi
+	 */
+	public function __construct(string $instanceId = EmbeDi::DefaultInstanceId, string $presetId = null, array $config = [])
 	{
 		$this->_instanceId = $instanceId;
 		$this->_presetId = $presetId;
@@ -126,7 +132,7 @@ class EmbeDi
 	 * ```php
 	 * foreach($configs as $config)
 	 * {
-	 * 		(new EmbeDi)->apply($config);
+	 *        (new EmbeDi)->apply($config);
 	 * }
 	 * ```
 	 * In abowe example at each loop iteration new `EmbeDi` instance is created.
@@ -136,7 +142,7 @@ class EmbeDi
 	 * ```php
 	 * foreach($configs as $config)
 	 * {
-	 * 		EmbeDi::fly()->apply($config);
+	 *        EmbeDi::fly()->apply($config);
 	 * }
 	 * ```
 	 * In above example only one instance of `EmbeDi` is used.
@@ -201,7 +207,7 @@ class EmbeDi
 	 */
 	public function addAdapter(AdapterInterface $adapter)
 	{
-		if(null === $this->storage->adapters)
+		if (null === $this->storage->adapters)
 		{
 			$this->storage->adapters = [];
 		}
@@ -214,19 +220,19 @@ class EmbeDi
 	 * Example:
 	 * ```
 	 * [
-	 * 		'logger' => [
-	 * 			'class' => Monolog\Logger\Logger,
-	 * 		],
-	 * 		'mangan' => [
-	 * 			'@logger' => 'logger'
-	 * 		]
+	 *        'logger' => [
+	 *            'class' => Monolog\Logger\Logger,
+	 *        ],
+	 *        'mangan' => [
+	 *            '@logger' => 'logger'
+	 *        ]
 	 * ]
 	 * ```
 	 * Attributes starting with `@` denotes that link to other
 	 * config component should be used. In example above, mangan field `logger`
 	 * will be configured with monolog logger.
-	 * @deprecated Use Maslosoft\EmbeDi\Adapters\ArrayAdapter instead
 	 * @param mixed[] $source
+	 * @deprecated Use Maslosoft\EmbeDi\Adapters\ArrayAdapter instead
 	 */
 	public function addConfig($source)
 	{
@@ -297,8 +303,8 @@ class EmbeDi
 	 * Example of creating object:
 	 * ```
 	 * $config = [
-	 * 		'class' => Vendor\Component::class,
-	 * 		'title' => 'bar'
+	 *        'class' => Vendor\Component::class,
+	 *        'title' => 'bar'
 	 * ];
 	 * (new Embedi)->apply($config);
 	 * ```
@@ -306,7 +312,7 @@ class EmbeDi
 	 * Example of applying config to existing object:
 	 * ```
 	 * $config = [
-	 * 		'title' => 'bar'
+	 *        'title' => 'bar'
 	 * ];
 	 * (new Embedi)->apply($config, new Vendor\Component);
 	 * ```
@@ -317,7 +323,7 @@ class EmbeDi
 	 * ```
 	 *
 	 * @param string|mixed[][] $configuration
-	 * @param object $object Object to configure, set to null to create new one
+	 * @param object           $object Object to configure, set to null to create new one
 	 * @return object
 	 */
 	public function apply($configuration, $object = null)
@@ -358,7 +364,7 @@ class EmbeDi
 
 	/**
 	 * Export object configuration to array
-	 * @param object $object
+	 * @param object   $object
 	 * @param string[] $fields
 	 * @return mixed[][]
 	 */
@@ -402,17 +408,17 @@ class EmbeDi
 	 * ```
 	 * class Component
 	 * {
-	 * 		public $title = '';
+	 *        public $title = '';
 	 *
-	 * 		public function __construct()
-	 * 		{
-	 * 			(new EmbeDi)->configure($this);
-	 * 		}
+	 *        public function __construct()
+	 *        {
+	 *            (new EmbeDi)->configure($this);
+	 *        }
 	 *
-	 * 		public function init()
-	 * 		{
-	 * 			(new EmbeDi)->store($this);
-	 * 		}
+	 *        public function init()
+	 *        {
+	 *            (new EmbeDi)->store($this);
+	 *        }
 	 * }
 	 *
 	 * $c1 = new Component();
@@ -434,9 +440,9 @@ class EmbeDi
 	 * By default configuration is not ovveriden on subsequent `store` calls.
 	 * This is done on purpose, to not mess basic configuration.
 	 *
-	 * @param object $object Object to store
+	 * @param object   $object Object to store
 	 * @param string[] $fields Fields to store
-	 * @param bool $update Whenever to update existing configuration
+	 * @param bool     $update Whenever to update existing configuration
 	 * @return mixed[] Stored data
 	 */
 	public function store($object, $fields = [], $update = false)
@@ -473,13 +479,13 @@ class EmbeDi
 	}
 
 	/**
-	 * Get class fields of object. By default all public and non static fields are returned.
+	 * Get class fields of object. By default, all public and non-static fields are returned.
 	 * This can be overridden by passing `$fields` names of fields. These are not checked for existence.
-	 * @param object $object
+	 * @param object   $object
 	 * @param string[] $fields
 	 * @return string[]
 	 */
-	private function _getFields($object, $fields)
+	private function _getFields($object, $fields): array
 	{
 		if (empty($fields))
 		{
@@ -493,6 +499,15 @@ class EmbeDi
 			}
 		}
 		return $fields;
+	}
+
+	public function getVersion(): string
+	{
+		if (null === self::$versionNumber)
+		{
+			self::$versionNumber = require __DIR__ . '/version.php';
+		}
+		return self::$versionNumber;
 	}
 
 }
