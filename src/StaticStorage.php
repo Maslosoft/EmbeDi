@@ -26,59 +26,53 @@ use Serializable;
  *
  * @author Piotr Maselkowski <pmaselkowski at gmail.com>
  */
-class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, MassAssignedInterface
+class StaticStorage implements Countable, Iterator, ArrayAccess, MassAssignedInterface
 {
 
 	/**
 	 * Namespace, current container class name
 	 * @var string
 	 */
-	private $ns = '';
+	private string $ns = '';
 
 	/**
 	 * Owner Id
 	 * @var string
 	 */
-	private $ownerId = '';
+	private string $ownerId;
 
 	/**
 	 * Instance id
 	 * @var string
 	 */
-	private $instanceId = '';
-
-	/**
-	 * Preset ID
-	 * @var string
-	 */
-	private $presetId = '';
+	private string $instanceId;
 
 	/**
 	 * Key for storage
 	 * @var string
 	 */
-	private $key = '';
+	private string $key = '';
 
 	/**
 	 * Stored values
 	 * @var mixed[][]
 	 */
-	public static $values = [];
+	public static array $values = [];
 
 	/**
 	 *
 	 * @param object|string $owner
-	 * @param string $instanceId
+	 * @param string        $instanceId
+	 * @param null          $presetId
 	 */
-	public function __construct($owner, $instanceId, $presetId = null)
+	public function __construct($owner, string $instanceId, $presetId = null)
 	{
 		$this->ns = get_class($this);
 		$this->ownerId = is_object($owner) ? get_class($owner) : $owner;
 		$this->instanceId = $instanceId;
-		$this->presetId = $presetId;
 		if (!empty($presetId))
 		{
-			$this->key = $this->instanceId . '.' . $this->presetId;
+			$this->key = $this->instanceId . '.' . $presetId;
 		}
 		else
 		{
@@ -110,7 +104,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 		return self::$values[$this->ns][$this->ownerId][$this->key] = $values;
 	}
 
-	public function removeAll()
+	public function removeAll(): void
 	{
 		self::$values[$this->ns][$this->ownerId][$this->key] = [];
 	}
@@ -118,7 +112,7 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 	/**
 	 * Destroy all data in all containers
 	 */
-	public function destroy()
+	public function destroy(): void
 	{
 		self::$values = [];
 	}
@@ -145,62 +139,84 @@ class StaticStorage implements Countable, Iterator, Serializable, ArrayAccess, M
 
 // <editor-fold defaultstate="collapsed" desc="Interfaces implementation">
 
-	public function count($mode = 'COUNT_NORMAL')
+	public function count($mode = 'COUNT_NORMAL'): int
 	{
 		return count(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		return current(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		return key(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
-	public function next()
+	public function next(): void
 	{
-		return next(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
+		next(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return array_key_exists($offset, self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
+	#[\ReturnTypeWillChange]
 	public function offsetGet($offset)
 	{
 		return self::$values[$this->ns][$this->ownerId][$this->instanceId][$offset];
 	}
 
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		self::$values[$this->ns][$this->ownerId][$this->instanceId][$offset] = $value;
 	}
 
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		unset(self::$values[$this->ns][$this->ownerId][$this->instanceId][$offset]);
 	}
 
-	public function rewind()
+	public function rewind(): void
 	{
 		reset(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
 	}
 
-	public function serialize()
+//	public function serialize(): string
+//	{
+//		return serialize(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
+//	}
+
+	public function __serialize(): array
 	{
-		return serialize(self::$values[$this->ns][$this->ownerId][$this->instanceId]);
+		$data = [
+			'ns' => $this->ns,
+			'ownerId' => $this->ownerId,
+			'instanceId' => $this->instanceId,
+			'data' => self::$values[$this->ns][$this->ownerId][$this->instanceId]
+		];
+		return $data;
 	}
 
-	public function unserialize($serialized)
+//	public function unserialize($data)
+//	{
+//		return self::$values[$this->ns][$this->ownerId][$this->instanceId] = unserialize($data, ['allowed_classes' => true]);
+//	}
+
+	public function __unserialize(array $data): void
 	{
-		return self::$values[$this->ns][$this->ownerId][$this->instanceId] = unserialize($serialized);
+		$this->ns = $data['ns'];
+		$this->ownerId = $data['ownerId'];
+		$this->instanceId = $data['instanceId'];
+		self::$values[$this->ns][$this->ownerId][$this->instanceId] = $data['data'];
 	}
 
-	public function valid()
+	public function valid(): bool
 	{
 		return $this->offsetExists($this->key());
 	}

@@ -83,8 +83,6 @@ class StaticStorageTest extends Test
 		$unserialized = unserialize($serialized);
 		$this->assertSame($unserialized['foo'], $data['foo']);
 		$this->assertSame($unserialized['bar'], $data['bar']);
-		$this->assertSame($this->storage->unserialize($serialized)['foo'], $data['foo']);
-		$this->assertSame($this->storage->unserialize($serialized)['bar'], $data['bar']);
 		$this->assertTrue($unserialized instanceof StaticStorage);
 	}
 
