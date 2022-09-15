@@ -2,7 +2,7 @@
 <!-- Auto generated do not modify between `header` and `/header` -->
 
 # <a href="https://maslosoft.com/embedi/"><img src="https://maslosoft.com/embedi/embedi.svg" style="height:24px;" alt="Embedi Logo"></a> <a href="https://maslosoft.com/embedi/">Maslosoft Embe Di</a>
-<a href="https://maslosoft.com/embedi/">_Embedded DI container_</a>
+<a href="https://maslosoft.com/embedi/">_Embedded Dependency Injection container_</a>
 
 <a href="https://packagist.org/packages/maslosoft/embedi" title="Latest Stable Version">
 <img src="https://poser.pugx.org/maslosoft/embedi/v/stable.svg" alt="Latest Stable Version" style="height: 20px;"/>
@@ -42,11 +42,11 @@ format of this configuration, and different means to access this
 configuration in our library.
 
 So when developing framework independent library - it usually
-comes with it own configuration sheme. So to alow it to be used
+comes with it own configuration scheme. So to allow it to be used
 with some framework it is required to add some kind of adapter - 
 for each library and for each framework:
 
-![Without EmbeDi](embedi-not-used.png)
+![Without EmbeDi](https://maslosoft.com/embedi/embedi-not-used.png)
 
 ## Reusable adapter
 
@@ -60,7 +60,7 @@ Then use existing EmbeDi adapter to connect it to the framework,
 or our own project. Even if there are no adapter for specified
 framework or project, generic array adapter can be used.
 
-![With EmbeDi](embedi-used.png)
+![With EmbeDi](https://maslosoft.com/embedi/embedi-used.png)
 
 ## Embedded dependency injection
 
@@ -75,7 +75,7 @@ EmbeDi allows You to include Dependency Injection container
 directly in your library.
 
 It is kind of configuring dependency injection from bottom to top of
-our application. So each library has it's own DI container,
+our application. So each library has its own DI container,
 uses it to configure itself. Then on top of project we only instruct
 EmbeDi where configuration is stored.
 
