@@ -1,6 +1,6 @@
 {
 	"name": "maslosoft/embedi",
-	"description": "Embedded DI container",
+	"description": "Embedded Dependency Injection container",
 	"license": [
 		"AGPL",
 		"Commercial"
