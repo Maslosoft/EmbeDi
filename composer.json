@@ -17,10 +17,9 @@
 		"issues": "https://github.com/Maslosoft/EmbeDi/issues"
 	},
 	"require-dev": {
-		"codeception/codeception": "*",
+		"codeception/codeception": "^4",
 		"codeception/module-asserts": "^2.0",
 		"codeception/specify": "*",
-		"maslosoft/hedron": "~1",
 		"maslosoft/zamm": "dev-master",
 		"yiisoft/yii": "~1"
 	},
