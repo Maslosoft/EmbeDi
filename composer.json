@@ -20,7 +20,7 @@
 		"codeception/codeception": "^4",
 		"codeception/module-asserts": "^2.0",
 		"codeception/specify": "*",
-		"maslosoft/zamm": "dev-master",
+		"maslosoft/zamm": "*",
 		"yiisoft/yii": "~1"
 	},
 	"autoload": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2f4e6982fd21ff84f169241d7707351",
+    "content-hash": "79c6026f5bef3549c9e7e7ae4623eca5",
     "packages": [],
     "packages-dev": [
         {
@@ -603,7 +603,7 @@
         },
         {
             "name": "maslosoft/zamm",
-            "version": "dev-master",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maslosoft/Zamm.git",
@@ -627,7 +627,6 @@
                 "symfony/console": "",
                 "symfony/finder": ""
             },
-            "default-branch": true,
             "bin": [
                 "zamm"
             ],
@@ -3904,9 +3903,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "maslosoft/zamm": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
