@@ -2,8 +2,8 @@
 
 # Documentation
 
-EmbeDi allows us to configure objects properties transparently, without expliticly setting them. It implements
-pattern similar to flyweight pattern, but new instance of configured *might* be createated. 
+EmbeDi allows us to configure objects properties transparently, without explicitly setting them. It implements
+pattern similar to flyweight pattern, but new instance of configured *might* be created.
 Object instance will be configured with optional configuration ID.
 
 ### Installing
@@ -17,7 +17,7 @@ composer install maslosoft/embedi
 ### Providing configuration
 
 Next step is to inform EmbeDi, about available configurations. These are defined by array with instance ID as a key, 
-and apropriate class name as a value, or `class` key with said class name. This can also be achieved by framework adapters, 
+and appropriate class name as a value, or `class` key with said class name. This can also be achieved by framework adapters,
 so that EmbeDi will use existing config files.
 
 In most simple example, create flyweight instance of EmbeDi and add configuration with `ArrayAdapter`. In this example,
