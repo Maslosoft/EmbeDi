@@ -1,7 +1,7 @@
 <!--header-->
 <!-- Auto generated do not modify between `header` and `/header` -->
 
-# <a href="https://maslosoft.com/embedi/">Maslosoft Embe Di</a>
+# <a href="https://maslosoft.com/embedi/"><img src="https://maslosoft.com/embedi/embedi.svg" style="height:24px;" alt="Embedi Logo"></a> <a href="https://maslosoft.com/embedi/">Maslosoft Embe Di</a>
 <a href="https://maslosoft.com/embedi/">_Embedded DI container_</a>
 
 <a href="https://packagist.org/packages/maslosoft/embedi" title="Latest Stable Version">
