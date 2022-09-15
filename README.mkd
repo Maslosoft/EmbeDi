@@ -10,15 +10,76 @@
 <a href="https://packagist.org/packages/maslosoft/embedi" title="License">
 <img src="https://poser.pugx.org/maslosoft/embedi/license.svg" alt="License" style="height: 20px;"/>
 </a>
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/?branch=master)
-<img src="https://travis-ci.org/Maslosoft/EmbeDi.svg?branch=master"/>
-<img src="http://hhvm.h4cc.de/badge/maslosoft/embedi.svg?style=flat"/>
+<a href="https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/?branch=master">
+	<img src="https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"/>
+</a>
+<a href="https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/?branch=master">
+	<img src="https://scrutinizer-ci.com/g/Maslosoft/EmbeDi/badges/coverage.png?b=master" alt="Code Coverage" />
+</a>
 
 ### Quick Install
 ```bash
 composer require maslosoft/embedi
 ```
+
+### Documentation
+
+<a href="https://maslosoft.com/embedi/docs/">Full Embedi Documentation</a>
+
+
+
+
+
+# Configuring external PHP libraries
+
+When developing project targeted at specific framework it is
+usually easy to allow developer using our library to configure it
+to his needs. 
+
+Each framework comes with some sort of configuration files,
+let it be YAML, or plain PHP config files. But each has a different
+format of this configuration, and different means to access this
+configuration in our library.
+
+So when developing framework independent library - it usually
+comes with it own configuration sheme. So to alow it to be used
+with some framework it is required to add some kind of adapter - 
+for each library and for each framework:
+
+![Without EmbeDi](embedi-not-used.png)
+
+## Reusable adapter
+
+EmbeDi aims to be reusable configuration adapter allowing dependency
+injection between frameworks, You project and other libraries.
+
+The idea is that when developing reusable library - make it load configuration
+using EmbeDi - Embedded Dependency Injection.
+
+Then use existing EmbeDi adapter to connect it to the framework,
+or our own project. Even if there are no adapter for specified
+framework or project, generic array adapter can be used.
+
+![With EmbeDi](embedi-used.png)
+
+## Embedded dependency injection
+
+Dependency injection allows us to build plug-in architecture
+without direct connections between components. This
+approach usually requires used libraries to be aware of used
+dependency injection (DI) container. 
+
+##### So DI container should be also dynamically configured?
+
+EmbeDi allows You to include Dependency Injection container
+directly in your library.
+
+It is kind of configuring dependency injection from bottom to top of
+our application. So each library has it's own DI container,
+uses it to configure itself. Then on top of project we only instruct
+EmbeDi where configuration is stored.
+
+
 
 <!--/header-->
 
