@@ -14,5 +14,7 @@ if (defined('PHP_WINDOWS_VERSION_MAJOR'))
 	require __DIR__ . '/../misc/Invoker.php';
 }
 
+echo "PHP " . phpversion() . PHP_EOL;
+
 $version = (new EmbeDi)->getVersion();
 echo "EmbeDi " . $version . PHP_EOL;

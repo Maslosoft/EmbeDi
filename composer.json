@@ -21,7 +21,7 @@
 		"codeception/module-asserts": "^2.0",
 		"codeception/specify": "*",
 		"maslosoft/zamm": "*",
-		"yiisoft/yii": "~1"
+		"yiisoft/yii": "^1"
 	},
 	"autoload": {
 		"psr-4": {
