@@ -2,7 +2,7 @@
 
 namespace StaticStorage;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit as Test;
 use EmbeDiTest\Models\NamedStorage;
 use UnitTester;
 

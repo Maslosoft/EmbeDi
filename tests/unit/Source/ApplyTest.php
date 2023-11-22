@@ -2,7 +2,7 @@
 
 namespace Source;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit as Test;
 use EmbeDiTest\Models\BarSubComponent;
 use EmbeDiTest\Models\CompoundComponent;
 use EmbeDiTest\Models\FooSubComponent;

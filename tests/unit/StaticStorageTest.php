@@ -1,6 +1,6 @@
 <?php
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit as Test;
 use Maslosoft\EmbeDi\StaticStorage;
 
 class StaticStorageTest extends Test

@@ -1,6 +1,6 @@
 <?php
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit as Test;
 use EmbeDiTest\Models\SimpleComponent;
 use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\EmbeDi;

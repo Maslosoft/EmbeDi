@@ -1,7 +1,7 @@
 <?php
 namespace Storage;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit as Test;
 use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\EmbeDi;
 use Maslosoft\EmbeDi\StoragePersister;
