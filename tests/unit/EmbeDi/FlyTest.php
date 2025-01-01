@@ -2,6 +2,7 @@
 
 namespace EmbeDi;
 
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\BarSubComponent;
 use EmbeDiTest\Models\CompoundComponent;
 use EmbeDiTest\Models\FooSubComponent;
@@ -9,7 +10,7 @@ use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\EmbeDi;
 use UnitTester;
 
-class FlyTest extends \Codeception\TestCase\Test
+class FlyTest extends Unit
 {
 
 	/**

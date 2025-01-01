@@ -17,8 +17,10 @@
 		"issues": "https://github.com/Maslosoft/EmbeDi/issues"
 	},
 	"require-dev": {
-		"codeception/codeception": "^4",
-		"codeception/module-asserts": "^2.0",
+		"codeception/codeception": "^5",
+		"codeception/module-asserts": "^3",
+		"codeception/module-filesystem": "^3",
+		"codeception/module-phpbrowser": "^3",
 		"codeception/specify": "*",
 		"maslosoft/zamm": "*",
 		"yiisoft/yii": "^1"

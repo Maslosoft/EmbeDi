@@ -1,9 +1,9 @@
 <?php
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Maslosoft\EmbeDi\StaticStorage;
 
-class StaticStorageTest extends Test
+class StaticStorageTest extends Unit
 {
 
 	/**

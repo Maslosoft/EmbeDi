@@ -2,7 +2,7 @@
 
 namespace Adapters;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\BarSubComponent;
 use EmbeDiTest\Models\CompoundComponent;
 use EmbeDiTest\Models\PresetedComponent;
@@ -12,7 +12,7 @@ use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\EmbeDi;
 use UnitTester;
 
-class ArrayTest extends Test
+class ArrayTest extends Unit
 {
 
 	/**

@@ -1,13 +1,13 @@
 <?php
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\BarSubComponent;
 use EmbeDiTest\Models\CompoundComponent;
 use EmbeDiTest\Models\FooSubComponent;
 use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\StaticStorage;
 
-class ConfigureCompoundComponentTest extends Test
+class ConfigureCompoundComponentTest extends Unit
 {
 
 	/**

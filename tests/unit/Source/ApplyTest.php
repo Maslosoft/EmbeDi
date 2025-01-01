@@ -2,14 +2,14 @@
 
 namespace Source;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\BarSubComponent;
 use EmbeDiTest\Models\CompoundComponent;
 use EmbeDiTest\Models\FooSubComponent;
 use Maslosoft\EmbeDi\EmbeDi;
 use UnitTester;
 
-class ApplyTest extends Test
+class ApplyTest extends Unit
 {
 
 	/**

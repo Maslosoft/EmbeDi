@@ -2,7 +2,7 @@
 
 namespace Adapters;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\BarSubComponent;
 use EmbeDiTest\Models\CompoundComponent;
 use EmbeDiTest\Models\FooSubComponent;
@@ -14,7 +14,7 @@ use Maslosoft\EmbeDi\EmbeDi;
 use UnitTester;
 use Yii;
 
-class YiiTest extends Test
+class YiiTest extends Unit
 {
 
 	/**

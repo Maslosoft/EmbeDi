@@ -1,11 +1,11 @@
 <?php
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\SimpleComponent;
 use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\EmbeDi;
 
-class ConfigureSimpleComponentTest extends Test
+class ConfigureSimpleComponentTest extends Unit
 {
 
 	/**

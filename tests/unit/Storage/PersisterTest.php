@@ -1,14 +1,14 @@
 <?php
 namespace Storage;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Maslosoft\EmbeDi\DiStore;
 use Maslosoft\EmbeDi\EmbeDi;
 use Maslosoft\EmbeDi\StoragePersister;
 use UnitTester;
 
 
-class PersisterTest extends Test
+class PersisterTest extends Unit
 {
     /**
      * @var UnitTester

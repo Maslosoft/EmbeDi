@@ -2,11 +2,11 @@
 
 namespace StaticStorage;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use EmbeDiTest\Models\NamedStorage;
 use UnitTester;
 
-class NamedStorageTest extends Test
+class NamedStorageTest extends Unit
 {
 
 	/**
