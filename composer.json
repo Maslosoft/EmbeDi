@@ -1,41 +1,42 @@
 {
-	"name": "maslosoft/embedi",
-	"description": "Embedded Dependency Injection container",
-	"license": [
-		"AGPL",
-		"Commercial"
-	],
-	"authors": [
-		{
-			"name": "Peter Maselkowski",
-			"email": "pmaselkowski@gmail.com",
-			"homepage": "http://maslosoft.com",
-			"role": "Developer"
-		}
-	],
-	"support": {
-		"issues": "https://github.com/Maslosoft/EmbeDi/issues"
-	},
-	"require": {
-		"php": ">=7.4"
-	},
-	"require-dev": {
-		"codeception/codeception": "^5",
-		"codeception/module-asserts": "^3",
-		"codeception/module-filesystem": "^3",
-		"codeception/module-phpbrowser": "^3",
-		"codeception/specify": "*",
-		"yiisoft/yii": "^1"
-	},
-	"autoload": {
-		"psr-4": {
-			"Maslosoft\\EmbeDi\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"EmbeDiTest\\Models\\": "models"
-		}
-	},
-	"homepage": "https://maslosoft.com/embedi/"
+    "name": "maslosoft/embedi",
+    "version": "2.0.3",
+    "description": "Embedded Dependency Injection container",
+    "license": [
+        "AGPL",
+        "Commercial"
+    ],
+    "authors": [
+        {
+            "name": "Peter Maselkowski",
+            "email": "pmaselkowski@gmail.com",
+            "homepage": "http://maslosoft.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Maslosoft/EmbeDi/issues"
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5",
+        "codeception/module-asserts": "^3",
+        "codeception/module-filesystem": "^3",
+        "codeception/module-phpbrowser": "^3",
+        "codeception/specify": "*",
+        "yiisoft/yii": "^1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Maslosoft\\EmbeDi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EmbeDiTest\\Models\\": "models"
+        }
+    },
+    "homepage": "https://maslosoft.com/embedi/"
 }
