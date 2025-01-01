@@ -25,7 +25,6 @@
 		"codeception/module-filesystem": "^3",
 		"codeception/module-phpbrowser": "^3",
 		"codeception/specify": "*",
-		"maslosoft/zamm": "*",
 		"yiisoft/yii": "^1"
 	},
 	"autoload": {
