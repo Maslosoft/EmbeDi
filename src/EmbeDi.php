@@ -84,7 +84,7 @@ class EmbeDi
 	 * @param string|null $presetId If set will lookup configuration in deeper array level
 	 * @param array       $config   Configuration of EmbeDi
 	 */
-	public function __construct(string $instanceId = EmbeDi::DefaultInstanceId, string $presetId = null, array $config = [])
+	public function __construct(string $instanceId = EmbeDi::DefaultInstanceId, ?string $presetId = null, array $config = [])
 	{
 		$this->_instanceId = $instanceId;
 		$this->_presetId = $presetId;
