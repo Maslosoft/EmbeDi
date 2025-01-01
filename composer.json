@@ -16,6 +16,9 @@
 	"support": {
 		"issues": "https://github.com/Maslosoft/EmbeDi/issues"
 	},
+	"require": {
+		"php": ">=7.4"
+	},
 	"require-dev": {
 		"codeception/codeception": "^5",
 		"codeception/module-asserts": "^3",
